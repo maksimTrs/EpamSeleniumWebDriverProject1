@@ -1,19 +1,17 @@
 package com.epam.seleniumhw.mailru.tests;
 
 import com.epam.seleniumhw.mailru.pageobject.MailRUMainPage;
-import com.epam.seleniumhw.mailru.utils.TestDataProvider;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
-import org.testng.ISuite;
 import org.testng.annotations.Test;
-import static org.assertj.core.api.Assertions.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @Epic("1")
 @Feature("Api for users")
 @Tag("rest")
-public class EmailLoginTest extends  BaseTest {
+public class EmailLoginTest extends BaseTest {
 
     private static final String emailFullUserName = "hokagemax777" + "@mail.ru";
 

@@ -7,7 +7,7 @@ import io.qameta.allure.testng.Tag;
 import org.testng.annotations.Test;
 
 @Epic("2")
-@Feature("Api for users")
+@Feature("Api for users2")
 @Tag("rest")
 public class EmailDraftCreationTest extends BaseTest {
 
@@ -15,8 +15,8 @@ public class EmailDraftCreationTest extends BaseTest {
     @Story("Create user1")
     @Description("Проверяет отправку запроса на создлание пользователя и что в системе создался юзер с указанным именем1")
     @Test(dataProvider = "data-provider", dataProviderClass = TestDataProvider.class,
-            groups = "smoke", testName = "test_create_addressBook_group")
-    public void testBookAddGroup(String groupName, String groupHeader, String groupFooter) {
+            testName = "test_create_addressBook_group")
+    public void createDraftEmailTest(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
 
 
     }

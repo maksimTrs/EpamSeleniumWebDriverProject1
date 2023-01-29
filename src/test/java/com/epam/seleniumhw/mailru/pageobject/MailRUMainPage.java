@@ -1,15 +1,11 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MailRUMainPage extends AbstractPage {
-
 
 
     @FindBy(xpath = "//div[@data-testid='whiteline-account']")
@@ -20,7 +16,7 @@ public class MailRUMainPage extends AbstractPage {
 
 
     public MailRUMainPage(WebDriver driver) {
-       super(driver);
+        super(driver);
     }
 
 

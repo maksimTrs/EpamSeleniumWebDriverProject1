@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="mail-ru-runner">
-<!--<suite name="mail-ru-runner" parallel="classes" thread-count="4">-->
+    <!--<suite name="mail-ru-runner" parallel="classes" thread-count="4">-->
 
     <test name="test-1">
         <parameter name="urlAddress" value="https://mail.ru/"/>
