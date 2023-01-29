@@ -5,11 +5,12 @@ import com.epam.seleniumhw.mailru.pageobject.MailRuLogInPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import io.qameta.allure.Attachment;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
-import org.testng.log4testng.Logger;
+
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -17,16 +18,16 @@ import java.util.List;
 import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
 
 
-public class BaseTest {
+public abstract class BaseTest {
 
-    protected Logger logger = Logger.getLogger(BaseTest.class);
+   // private final static Logger logger = Logger.getLogger(BaseTest.class);
+    private  static Logger logger = Logger.getLogger(BaseTest.class);
     protected WebDriver driver;
 
 
     @BeforeClass
     @Parameters({"urlAddress", "emailName", "emailPassword"})
     public void setUp(String urlAddress, String emailName, String emailPassword) {
-
 
         String browserType = "CHROME"; // FIREFOX  CHROME
 
@@ -52,7 +53,7 @@ public class BaseTest {
     @BeforeMethod
     public void logTestStart(Method method, Object[] parameters) {
         logger.info("********************************************************************************");
-        logger.info("<<< Dummy method: " + method.getName() + " with parameters " + List.of(parameters) + " was started >>>");
+        logger.info("<<< Test method: " + method.getName() + " with parameters " + List.of(parameters) + " was started >>>");
         logger.info("********************************************************************************");
 
     }
@@ -62,7 +63,7 @@ public class BaseTest {
         saveScreenshotPNG();
 
         logger.info("********************************************************************************");
-        logger.info("<<< Dummy method: " + method.getName() + " was finished >>>");
+        logger.info("<<< Test method: " + method.getName() + " was finished >>>");
         logger.info("********************************************************************************");
 
     }
@@ -70,7 +71,7 @@ public class BaseTest {
 
     @Attachment(value = "Page Screenshot", type = "image/png")
     public byte[] saveScreenshotPNG() {
-        System.out.println("Attaching screenshot to Allure report");
+        logger.info("Attaching screenshot to Allure report");
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
