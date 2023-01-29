@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class NumberGenerator {
 
+
     public static String getRandomFirstDomainLvl() {
         StringBuilder init = new StringBuilder();
         Random r = new Random();
