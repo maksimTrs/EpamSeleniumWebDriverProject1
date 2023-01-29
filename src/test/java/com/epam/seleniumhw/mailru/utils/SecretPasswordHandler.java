@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 public class SecretPasswordHandler {
 
-    private static final String PASS_BASE64 = "aG9rYWdlbWF4MDIwNTkw";
+    private static String PASS_BASE64 = "aG9rYWdlbWF4MDIwNTkw";
 
     private static String returnPass(String pass) {
         if (pass != null && pass.equals(PASS_BASE64)) {

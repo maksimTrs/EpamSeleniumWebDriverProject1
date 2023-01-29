@@ -11,7 +11,6 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 
-
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -20,8 +19,8 @@ import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPas
 
 public abstract class BaseTest {
 
-   // private final static Logger logger = Logger.getLogger(BaseTest.class);
-    private  static Logger logger = Logger.getLogger(BaseTest.class);
+    // private final static Logger logger = Logger.getLogger(BaseTest.class);
+    private static Logger logger = Logger.getLogger(BaseTest.class);
     protected WebDriver driver;
 
 
