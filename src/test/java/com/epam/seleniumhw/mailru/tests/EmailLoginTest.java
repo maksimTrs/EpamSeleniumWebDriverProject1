@@ -20,7 +20,7 @@ public class EmailLoginTest extends  BaseTest {
     @Step("Создание пользователя1")
     @Story("Create user1")
     @Description("Проверяет отправку запроса на создлание пользователя и что в системе создался юзер с указанным именем1")
-    @Test(groups = "smoke", testName = "mail_page_login_test")
+    @Test(testName = "mail_page_login_test")
     public void logInTest() {
 
         MailRUMainPage mailRUMainPage = new MailRUMainPage(driver);
