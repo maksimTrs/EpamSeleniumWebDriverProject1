@@ -9,6 +9,7 @@
         <classes>
             <class name="com.epam.seleniumhw.mailru.tests.EmailLoginTest"/>
             <class name="com.epam.seleniumhw.mailru.tests.EmailDraftCreationTest"/>
+            <class name="com.epam.seleniumhw.mailru.tests.EmailCompareDraftFieldsTest"/>
         </classes>
     </test>
 </suite>
