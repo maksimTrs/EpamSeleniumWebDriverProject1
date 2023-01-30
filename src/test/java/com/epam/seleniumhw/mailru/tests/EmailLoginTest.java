@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Tag("rest")
 public class EmailLoginTest extends BaseTest {
 
-    private static final String emailFullUserName = "hokagemax777" + "@mail.ru";
+    private static final String emailFullUserName = "hokagemax777@mail.ru";
 
     @Step("Создание пользователя1")
     @Story("Create user1")

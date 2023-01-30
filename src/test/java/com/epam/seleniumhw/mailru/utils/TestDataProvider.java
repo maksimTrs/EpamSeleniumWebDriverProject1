@@ -21,4 +21,19 @@ public class TestDataProvider {
         };
     }
 
+    @DataProvider(name = "send-data-provider")
+    public static Object[][] dataProviderToSendEmail() {
+        return new Object[][]{
+                {toWhomAddressEmailField + 9, subjectEmailField + 9, messageEmailField + 9}
+        };
+    }
+
+
+    @DataProvider(name = "data-provider-compare-email")
+    public static Object[][] dataProviderToCompareEmail() {
+        return new Object[][]{
+                {toWhomAddressEmailField + 3, subjectEmailField + 3, messageEmailField + 3}
+        };
+    }
+
 }
