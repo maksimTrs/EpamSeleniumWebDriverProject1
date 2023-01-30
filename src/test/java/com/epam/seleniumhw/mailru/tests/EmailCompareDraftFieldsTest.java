@@ -21,7 +21,7 @@ public class EmailCompareDraftFieldsTest extends BaseTest {
             " values have the same result in Draft Email")
     @Test(dataProvider = "data-provider", dataProviderClass = TestDataProvider.class,
             testName = "test_check_draft_email_main_fields")
-    public void createDraftEmailTest(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
+    public void checkEmailFieldsTest(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
 
         MailRUMainPage mailRUMainPage = new MailRUMainPage(driver);
         mailRUMainPage.createNewDraftEmail(toWhomAddressEmailField, subjectEmailField, messageEmailField);
