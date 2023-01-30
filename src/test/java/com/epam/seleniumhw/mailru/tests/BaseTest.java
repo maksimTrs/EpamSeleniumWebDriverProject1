@@ -20,7 +20,7 @@ import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPas
 public abstract class BaseTest {
 
     // private final static Logger logger = Logger.getLogger(BaseTest.class);
-    private static Logger logger = Logger.getLogger(BaseTest.class);
+    protected static Logger logger = Logger.getLogger(BaseTest.class);
     protected WebDriver driver;
 
 
