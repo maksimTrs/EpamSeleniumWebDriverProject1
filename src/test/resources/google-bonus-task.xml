@@ -5,7 +5,7 @@
 
     <test name="test-search-song">
         <classes>
-            <class name="com.epam.seleniumhw.google.tests.GoogleBonusTaskTest"/>
+            <class name="com.epam.seleniumhw.google.tests.GoogleBonusTask"/>
         </classes>
     </test>
 </suite>
