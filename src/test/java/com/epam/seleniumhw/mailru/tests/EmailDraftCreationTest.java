@@ -7,10 +7,12 @@ import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.epam.seleniumhw.mailru.utils.MailPartitions.DRAFT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Epic("2")
@@ -29,7 +31,7 @@ public class EmailDraftCreationTest extends BaseTest {
         mailRUMainPage.createNewDraftEmail(toWhomAddressEmailField, subjectEmailField, messageEmailField);
 
 
-        List<String> listOfUsersToSend = mailRUMainPage.getDraftEmailList()
+        List<String> listOfUsersToSend = mailRUMainPage.getEmailList(DRAFT)
                 .stream().map(WebElement::getText)
                 .filter(row -> row.contains(toWhomAddressEmailField))
                 .flatMap(s -> Arrays.stream(s.split(" ")))
