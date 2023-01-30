@@ -3,7 +3,10 @@ package com.epam.seleniumhw.mailru.tests;
 
 import com.epam.seleniumhw.mailru.pageobject.MailRUMainPage;
 import com.epam.seleniumhw.mailru.utils.TestDataProvider;
-import io.qameta.allure.*;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.qameta.allure.testng.Tag;
 import org.testng.annotations.Test;
 
@@ -19,7 +22,7 @@ public class EmailCompareDraftFieldsTest extends BaseTest {
     @Story("Check Input Email data VS Draft Email data")
     @Description("Checking that input toWhomAddressEmailField, subjectEmailField, messageEmailField field" +
             " values have the same result in Draft Email")
-    @Test(dataProvider = "data-provider", dataProviderClass = TestDataProvider.class,
+    @Test(dataProvider = "data-provider-compare-email", dataProviderClass = TestDataProvider.class,
             testName = "test_check_draft_email_main_fields")
     public void checkEmailFieldsTest(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
 
