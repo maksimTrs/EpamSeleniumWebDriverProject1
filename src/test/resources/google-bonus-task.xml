@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="google-runner">
+    <parameter name="urlAddress" value="https://google.com/"/>
+    <parameter name="directory" value="E:/MAX/EPAM/AT_Mentoring_Java_Basic/Selenium WebDriver/HW/song_html_page/"/>
+
+    <test name="test-search-song">
+        <classes>
+            <class name="com.epam.seleniumhw.google.tests.GoogleBonusTask"/>
+        </classes>
+    </test>
+</suite>
