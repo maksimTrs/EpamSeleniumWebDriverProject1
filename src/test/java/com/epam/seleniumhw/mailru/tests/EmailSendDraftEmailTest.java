@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.epam.seleniumhw.mailru.utils.MailPartitions.DRAFT;
+import static com.epam.seleniumhw.mailru.utils.MailPartitions.SENT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -26,7 +28,7 @@ public class EmailSendDraftEmailTest extends BaseTest {
 
     @Story("Check the sending of the Draft Email message")
     @Description("Checking that Draft Email message was sent to the user")
-    @Test(dataProvider = "data-provider", dataProviderClass = TestDataProvider.class,
+    @Test(dataProvider = "send-data-provider", dataProviderClass = TestDataProvider.class,
             testName = "test_check_draft_email_main_fields")
     public void sendDraftEmailToUserTest(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
 
@@ -36,9 +38,9 @@ public class EmailSendDraftEmailTest extends BaseTest {
         mailRUMainPage.sendDraftEmail(toWhomAddressEmailField);
 
 
-        List<String> listOfSentUsers = mailRUMainPage.getSentEmailList()
+        List<String> listOfSentUsers = mailRUMainPage.getEmailList(SENT)
                 .stream().map(WebElement::getText)
-               // .filter(row -> row.equals(toWhomAddressEmailField))
+                // .filter(row -> row.equals(toWhomAddressEmailField))
                 .flatMap(s -> Arrays.stream(s.split(" ")))
                 .collect(Collectors.toList());
 
@@ -49,7 +51,7 @@ public class EmailSendDraftEmailTest extends BaseTest {
                 .contains(toWhomAddressEmailField);
 
 
-        List<String> listOfDraftUsers = mailRUMainPage.getDraftEmailList()
+        List<String> listOfDraftUsers = mailRUMainPage.getEmailList(DRAFT)
                 .stream().map(WebElement::getText)
                 // .filter(row -> row.equals(toWhomAddressEmailField))
                 .flatMap(s -> Arrays.stream(s.split(" ")))
