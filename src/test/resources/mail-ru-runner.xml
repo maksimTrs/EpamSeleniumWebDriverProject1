@@ -8,6 +8,7 @@
         <parameter name="emailPassword" value="aG9rYWdlbWF4MDIwNTkw"/>
         <classes>
             <class name="com.epam.seleniumhw.mailru.tests.EmailLoginTest"/>
+            <class name="com.epam.seleniumhw.mailru.tests.EmailDraftCreationTest"/>
         </classes>
     </test>
 </suite>
