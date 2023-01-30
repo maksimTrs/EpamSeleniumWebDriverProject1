@@ -45,8 +45,17 @@ public class MailRUMainPage extends AbstractPage {
     @FindBy(xpath = "//div[@class='llc__container']")
     private List<WebElement> draftEmailList;
 
+    @FindBy(xpath = "//div[@aria-label='grid']")
+    private WebElement draftEmailListBlock;
 
-    private static String toWhomElementPattern = "//div[@class='llc__content']/div/span[text()='%s']";
+    @FindBy(xpath = "//div[@data-test-id='underlay-wrapper']//button/preceding-sibling::span")
+    private WebElement toWhomAddressEmailDraftField;
+
+    @FindBy(xpath = "//div[@role='textbox']//div[contains(@id, 'BODY')]/div/div[1]")
+    private WebElement bodyEmailDraftField;
+
+
+    private static String toWhomElementPattern = "//div/span[text()='%s']";
 
 
     public MailRUMainPage(WebDriver driver) {
@@ -80,7 +89,8 @@ public class MailRUMainPage extends AbstractPage {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
         draftEmailPartition.click();
 
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElements(draftEmailList));
+       // webDriverWait.until(ExpectedConditions.visibilityOfAllElements(draftEmailList));
+        webDriverWait.until(ExpectedConditions.visibilityOfAllElements(draftEmailListBlock));
 
         List<WebElement> textValuesOfEmail = new ArrayList<>();
         for (WebElement element : draftEmailList) {
@@ -88,7 +98,7 @@ public class MailRUMainPage extends AbstractPage {
         }
 
         System.out.println("Aggregated Email Addresses:");
-        for (WebElement webElement:textValuesOfEmail) {
+        for (WebElement webElement : textValuesOfEmail) {
             System.out.println(webElement.getText());
         }
 
@@ -99,8 +109,18 @@ public class MailRUMainPage extends AbstractPage {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
         draftEmailPartition.click();
 
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElements(draftEmailList));
+        webDriverWait.until(ExpectedConditions.visibilityOfAllElements(draftEmailListBlock));
         driver.findElement(By.xpath(String.format(toWhomElementPattern, toWhomUser))).click();
     }
 
+    public List<String> checkDraftEmailInternalFields() {
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
+
+        List<String> draftEmailInternalData = new ArrayList<>();
+        draftEmailInternalData.add(toWhomAddressEmailDraftField.getText());
+        draftEmailInternalData.add(subjectEmailField.getAttribute("value"));
+        draftEmailInternalData.add(bodyEmailDraftField.getText());
+
+        return draftEmailInternalData;
+    }
 }
