@@ -42,11 +42,14 @@ public class MailRUMainPage extends AbstractPage {
     private WebElement draftEmailPartition;
 
 
-    @FindBy(xpath = "//div[@class='llc__container']")
+    @FindBy(xpath = "//a[contains(@href, '/drafts/')]//div[@class='llc__container']")
     private List<WebElement> draftEmailList;
 
+    @FindBy(xpath = "//a[contains(@href, '/sent/')]//div[@class='llc__container']")
+    private List<WebElement> sentEmailList;
+
     @FindBy(xpath = "//div[@aria-label='grid']")
-    private WebElement draftEmailListBlock;
+    private WebElement emailListBlock;
 
     @FindBy(xpath = "//div[@data-test-id='underlay-wrapper']//button/preceding-sibling::span")
     private WebElement toWhomAddressEmailDraftField;
@@ -54,14 +57,27 @@ public class MailRUMainPage extends AbstractPage {
     @FindBy(xpath = "//div[@role='textbox']//div[contains(@id, 'BODY')]/div/div[1]")
     private WebElement bodyEmailDraftField;
 
+    @FindBy(css = "button[data-test-id='send']")
+    private WebElement sendEmailButton;
 
-    private static String toWhomElementPattern = "//div/span[text()='%s']";
+    @FindBy(xpath = "//div/a[text()='Письмо отправлено']")
+    private WebElement sendEmailPopUpTextMsg;
+
+    @FindBy(css = "span[title='Закрыть']")
+    private WebElement sendEmailCloseButton;
+
+    @FindBy(xpath = "//a[contains(@href, '/sent')]//div[text()='Отправленные']")
+    private WebElement sentEmailPartition;
+
+
+    private  String toWhomElementPattern = "//div[@class='llc__container']//span[@title='%s']";
+    private static String toWhomElementDraftList = "//a[contains(@href, '/drafts/')]//div[@class='llc__content']/div[1]/span[1]";
+    private static String toWhomElementSentList = "//a[contains(@href, '/sent/')]//div[@class='llc__content']/div[1]/span[1]";
 
 
     public MailRUMainPage(WebDriver driver) {
         super(driver);
     }
-
 
     public String checkUserLogInName() {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
@@ -85,16 +101,18 @@ public class MailRUMainPage extends AbstractPage {
         emailClosePopUpButton.click();
     }
 
+
     public List<WebElement> getDraftEmailList() {
+
         webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
         draftEmailPartition.click();
 
-       // webDriverWait.until(ExpectedConditions.visibilityOfAllElements(draftEmailList));
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElements(draftEmailListBlock));
+
+        webDriverWait.until(ExpectedConditions.visibilityOfAllElements(emailListBlock));
 
         List<WebElement> textValuesOfEmail = new ArrayList<>();
         for (WebElement element : draftEmailList) {
-            textValuesOfEmail = element.findElements(By.xpath("//div[@class='llc__content']/div[1]/span[1]"));
+            textValuesOfEmail = element.findElements(By.xpath(toWhomElementDraftList));
         }
 
         System.out.println("Aggregated Email Addresses:");
@@ -109,7 +127,9 @@ public class MailRUMainPage extends AbstractPage {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
         draftEmailPartition.click();
 
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElements(draftEmailListBlock));
+        webDriverWait.until(ExpectedConditions.visibilityOfAllElements(emailListBlock));
+
+        //  webDriverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(String.format(toWhomElementPattern, toWhomUser))));
         driver.findElement(By.xpath(String.format(toWhomElementPattern, toWhomUser))).click();
     }
 
@@ -123,4 +143,43 @@ public class MailRUMainPage extends AbstractPage {
 
         return draftEmailInternalData;
     }
+
+
+    public void sendDraftEmail(String toWhomUser) {
+        openDraftEmail(toWhomUser);
+
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
+
+        sendEmailButton.click();
+        webDriverWait.until(ExpectedConditions.visibilityOf(sendEmailPopUpTextMsg));
+        sendEmailCloseButton.click();
+
+        //driver.navigate().refresh();
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
+
+    }
+
+
+    public List<WebElement> getSentEmailList() {
+
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
+        sentEmailPartition.click();
+
+
+        webDriverWait.until(ExpectedConditions.visibilityOfAllElements(emailListBlock));
+
+        List<WebElement> textValuesOfEmail = new ArrayList<>();
+        for (WebElement element : sentEmailList) {
+            textValuesOfEmail = element.findElements(By.xpath(toWhomElementSentList));
+        }
+
+        System.out.println("Aggregated Email Addresses:");
+        for (WebElement webElement : textValuesOfEmail) {
+            System.out.println(webElement.getText());
+        }
+
+        return textValuesOfEmail;
+    }
+
+
 }

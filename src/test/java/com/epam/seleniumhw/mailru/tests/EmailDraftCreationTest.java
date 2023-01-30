@@ -29,16 +29,16 @@ public class EmailDraftCreationTest extends BaseTest {
         mailRUMainPage.createNewDraftEmail(toWhomAddressEmailField, subjectEmailField, messageEmailField);
 
 
-        List<String> listOfAddressGroups = mailRUMainPage.getDraftEmailList()
+        List<String> listOfUsersToSend = mailRUMainPage.getDraftEmailList()
                 .stream().map(WebElement::getText)
                 .filter(row -> row.contains(toWhomAddressEmailField))
                 .flatMap(s -> Arrays.stream(s.split(" ")))
                 .collect(Collectors.toList());
 
-        logger.info("List Filtering data = " + listOfAddressGroups);
+        logger.info("List Filtering data = " + listOfUsersToSend);
 
 
-        assertThat(listOfAddressGroups).as("Wrong mapping data!")
+        assertThat(listOfUsersToSend).as("Wrong mapping data!")
                 .isNotEmpty()
                 .containsOnly(toWhomAddressEmailField);
 
