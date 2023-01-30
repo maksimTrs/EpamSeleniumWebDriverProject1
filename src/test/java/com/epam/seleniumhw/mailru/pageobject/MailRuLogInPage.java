@@ -1,5 +1,6 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,6 +27,8 @@ public class MailRuLogInPage extends AbstractPage {
     @FindBy(xpath = "//button[@data-test-id='submit-button']")
     private WebElement logInSubmitButton;
 
+    private static  String logInIFrame = "//iframe[contains(@src, 'mail.ru/login')]";
+
 
     public MailRuLogInPage(WebDriver driver) {
         super(driver);
@@ -37,7 +40,8 @@ public class MailRuLogInPage extends AbstractPage {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(logInButton));
         logInButton.click();
 
-        driver.switchTo().frame(13);
+      //  driver.switchTo().frame(13);
+        driver.switchTo().frame(driver.findElement(By.xpath(logInIFrame)));
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userNameLogInField));
         userNameLogInField.sendKeys(username);
