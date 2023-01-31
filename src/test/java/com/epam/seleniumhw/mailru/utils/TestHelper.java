@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 public class TestHelper {
 
-
     public static List<String> getEmailListDataTestHelper(MailRUMainPage mailRUMainPage, MailPartitionNameList mailPartitionNameList) {
 
         List<String> listOfUsers = mailRUMainPage.getEmailList(mailPartitionNameList)
