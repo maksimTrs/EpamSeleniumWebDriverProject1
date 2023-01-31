@@ -11,7 +11,7 @@ public class MailRuLogInPage extends AbstractPage {
 
     private static String logInIFrame = "//iframe[contains(@src, 'mail.ru/login')]";
 
-//    @FindBy(xpath = "//div/iframe[contains(@src, 'mail.ru/login')]")
+    //    @FindBy(xpath = "//div/iframe[contains(@src, 'mail.ru/login')]")
 //    private WebElement logInPopUpIframe;
     @FindBy(xpath = "//div[@data-testid='logged-out-one-click']/button[text()='Войти']")
     private WebElement logInButton;
@@ -51,5 +51,11 @@ public class MailRuLogInPage extends AbstractPage {
         logInSubmitButton.click();
 
         driver.switchTo().defaultContent();
+    }
+
+    public boolean checkLogOut() {
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(logInButton));
+
+        return (logInButton.isDisplayed() || logInButton.isEnabled());
     }
 }

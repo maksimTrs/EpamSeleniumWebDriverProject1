@@ -1,6 +1,6 @@
 package com.epam.seleniumhw.mailru.utils;
 
-public enum MailPartitions {
+public enum MailPartitionNameList {
     DRAFT,
     SENT
 }

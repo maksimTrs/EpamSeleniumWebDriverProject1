@@ -8,15 +8,13 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.qameta.allure.testng.Tag;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static com.epam.seleniumhw.mailru.utils.MailPartitions.DRAFT;
-import static com.epam.seleniumhw.mailru.utils.MailPartitions.SENT;
+import static com.epam.seleniumhw.mailru.utils.MailPartitionNameList.DRAFT;
+import static com.epam.seleniumhw.mailru.utils.MailPartitionNameList.SENT;
+import static com.epam.seleniumhw.mailru.utils.TestHelper.getEmailListDataTestHelper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -38,26 +36,14 @@ public class EmailSendDraftEmailTest extends BaseTest {
         mailRUMainPage.sendDraftEmail(toWhomAddressEmailField);
 
 
-        List<String> listOfSentUsers = mailRUMainPage.getEmailList(SENT)
-                .stream().map(WebElement::getText)
-                // .filter(row -> row.equals(toWhomAddressEmailField))
-                .flatMap(s -> Arrays.stream(s.split(" ")))
-                .collect(Collectors.toList());
-
-        logger.info("List Filtering data = " + listOfSentUsers);
+        List<String> listOfSentUsers = getEmailListDataTestHelper(mailRUMainPage, SENT);
 
         assertThat(listOfSentUsers).as("Wrong mapping data!")
                 .isNotEmpty()
                 .contains(toWhomAddressEmailField);
 
 
-        List<String> listOfDraftUsers = mailRUMainPage.getEmailList(DRAFT)
-                .stream().map(WebElement::getText)
-                // .filter(row -> row.equals(toWhomAddressEmailField))
-                .flatMap(s -> Arrays.stream(s.split(" ")))
-                .collect(Collectors.toList());
-
-        logger.info("List Filtering data = " + listOfDraftUsers);
+        List<String> listOfDraftUsers = getEmailListDataTestHelper(mailRUMainPage, DRAFT);
 
 
         assertThat(listOfDraftUsers).as("Draft Email is  still located on Draft Partition!")
