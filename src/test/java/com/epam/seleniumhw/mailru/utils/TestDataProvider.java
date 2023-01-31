@@ -8,7 +8,6 @@ import static com.epam.seleniumhw.mailru.utils.NumberGenerator.getRandomFirstDom
 
 public class TestDataProvider {
 
-
     private static String toWhomAddressEmailField = "TestUser_" + getIntRandomValue() + "@test." + getRandomFirstDomainLvl();
     private static String subjectEmailField = "TestSubject_" + getIntRandomValue();
     private static String messageEmailField = "TestMessage_" + getIntRandomValue();
