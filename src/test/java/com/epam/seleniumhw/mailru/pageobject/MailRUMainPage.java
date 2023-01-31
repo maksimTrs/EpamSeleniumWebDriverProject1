@@ -1,6 +1,6 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
-import com.epam.seleniumhw.mailru.utils.MailPartitions;
+import com.epam.seleniumhw.mailru.utils.MailPartitionNameList;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,8 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.seleniumhw.mailru.utils.MailPartitions.DRAFT;
-import static com.epam.seleniumhw.mailru.utils.MailPartitions.SENT;
+import static com.epam.seleniumhw.mailru.utils.MailPartitionNameList.DRAFT;
+import static com.epam.seleniumhw.mailru.utils.MailPartitionNameList.SENT;
 
 public class MailRUMainPage extends AbstractPage {
 
@@ -20,6 +20,8 @@ public class MailRUMainPage extends AbstractPage {
     private static String toWhomElementSentList = "//a[contains(@href, '/sent/')]//div[@class='llc__content']/div[1]/span[1]";
     @FindBy(xpath = "//div[@data-testid='whiteline-account']")
     private WebElement userMailAccountSection;
+    @FindBy(xpath = "//div[@data-testid='whiteline-account-exit']//div[text()='Выйти']")
+    private WebElement mailExitButton;
     @FindBy(xpath = "//div[@data-testid='whiteline-account']/span[2]")
     private WebElement userMailAccountName;
     @FindBy(xpath = "//a[@title='Написать письмо']")
@@ -54,7 +56,7 @@ public class MailRUMainPage extends AbstractPage {
     private WebElement sendEmailCloseButton;
     @FindBy(xpath = "//a[contains(@href, '/sent')]//div[text()='Отправленные']")
     private WebElement sentEmailPartition;
-    private String toWhomElementPattern = "//div[@class='llc__container']//span[@title='%s']";
+    private String toWhomElementPattern = "//a[contains(@href, '/drafts/')]//div//span[@title='%s']";
 
 
     public MailRUMainPage(WebDriver driver) {
@@ -120,11 +122,11 @@ public class MailRUMainPage extends AbstractPage {
 
     }
 
-    public List<WebElement> getEmailList(MailPartitions mailPartitions) {
+    public List<WebElement> getEmailList(MailPartitionNameList mailPartitionNameList) {
 
         List<WebElement> textValuesOfEmail = new ArrayList<>();
 
-        if (mailPartitions == DRAFT) {
+        if (mailPartitionNameList == DRAFT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
             draftEmailPartition.click();
 
@@ -143,7 +145,7 @@ public class MailRUMainPage extends AbstractPage {
 
         }
 
-        if (mailPartitions == SENT) {
+        if (mailPartitionNameList == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
             sentEmailPartition.click();
 
@@ -163,6 +165,17 @@ public class MailRUMainPage extends AbstractPage {
         }
 
         return textValuesOfEmail;
+    }
+
+
+    public MailRuLogInPage doLogOut() {
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
+        userMailAccountSection.click();
+
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(mailExitButton));
+        mailExitButton.click();
+
+        return new MailRuLogInPage(driver);
     }
 
 
