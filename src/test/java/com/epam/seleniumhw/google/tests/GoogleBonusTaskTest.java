@@ -27,6 +27,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
  * <google-bonus-task.xml> : name="directory" value="{path_dirname}"
  */
 
+
 public class GoogleBonusTaskTest {
 
     private WebDriver driver;

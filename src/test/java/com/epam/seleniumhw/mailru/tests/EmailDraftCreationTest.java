@@ -5,14 +5,12 @@ import com.epam.seleniumhw.mailru.pageobject.MailRUMainPage;
 import com.epam.seleniumhw.mailru.utils.TestDataProvider;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static com.epam.seleniumhw.mailru.utils.MailPartitions.DRAFT;
+import static com.epam.seleniumhw.mailru.utils.MailPartitionNameList.DRAFT;
+import static com.epam.seleniumhw.mailru.utils.TestHelper.getEmailListDataTestHelper;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Epic("2")
@@ -30,19 +28,11 @@ public class EmailDraftCreationTest extends BaseTest {
         MailRUMainPage mailRUMainPage = new MailRUMainPage(driver);
         mailRUMainPage.createNewDraftEmail(toWhomAddressEmailField, subjectEmailField, messageEmailField);
 
+        List<String> listOfDraftUsers = getEmailListDataTestHelper(mailRUMainPage, DRAFT);
 
-        List<String> listOfUsersToSend = mailRUMainPage.getEmailList(DRAFT)
-                .stream().map(WebElement::getText)
-                .filter(row -> row.contains(toWhomAddressEmailField))
-                .flatMap(s -> Arrays.stream(s.split(" ")))
-                .collect(Collectors.toList());
-
-        logger.info("List Filtering data = " + listOfUsersToSend);
-
-
-        assertThat(listOfUsersToSend).as("Wrong mapping data!")
+        assertThat(listOfDraftUsers).as("Wrong mapping data!")
                 .isNotEmpty()
-                .containsOnly(toWhomAddressEmailField);
+                .contains(toWhomAddressEmailField);
 
 
     }
