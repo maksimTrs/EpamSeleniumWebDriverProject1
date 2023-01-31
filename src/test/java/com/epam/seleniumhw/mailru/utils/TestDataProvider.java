@@ -23,7 +23,7 @@ public class TestDataProvider {
     @DataProvider(name = "send-data-provider")
     public static Object[][] dataProviderToSendEmail() {
         return new Object[][]{
-                {toWhomAddressEmailField + 9, subjectEmailField + 9, messageEmailField + 9}
+                {toWhomAddressEmailField + 99, subjectEmailField + 99, messageEmailField + 99}
         };
     }
 
@@ -31,7 +31,7 @@ public class TestDataProvider {
     @DataProvider(name = "data-provider-compare-email")
     public static Object[][] dataProviderToCompareEmail() {
         return new Object[][]{
-                {toWhomAddressEmailField + 3, subjectEmailField + 3, messageEmailField + 3}
+                {toWhomAddressEmailField + 33, subjectEmailField + 33, messageEmailField + 33}
         };
     }
 

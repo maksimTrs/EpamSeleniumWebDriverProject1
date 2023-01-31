@@ -56,7 +56,12 @@ public class MailRUMainPage extends AbstractPage {
     private WebElement sendEmailCloseButton;
     @FindBy(xpath = "//a[contains(@href, '/sent')]//div[text()='Отправленные']")
     private WebElement sentEmailPartition;
-    private String toWhomElementPattern = "//a[contains(@href, '/drafts/')]//div//span[@title='%s']";
+    @FindBy(xpath = "//a[contains(@href, 'drafts')]/ancestor::div[@role='rowgroup']")
+    private WebElement draftEmailListWaiter;
+
+
+
+    private String toWhomElementPattern = "//a[contains(@href, 'drafts')]//div//span[@title='%s']";
 
 
     public MailRUMainPage(WebDriver driver) {
@@ -90,7 +95,9 @@ public class MailRUMainPage extends AbstractPage {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
         draftEmailPartition.click();
 
-        webDriverWait.until(ExpectedConditions.visibilityOfAllElements(emailListBlock));
+        //webDriverWait.until(ExpectedConditions.visibilityOfAllElements(emailListBlock));
+
+        webDriverWait.until(ExpectedConditions.visibilityOfAllElements(draftEmailListWaiter));
 
         driver.findElement(By.xpath(String.format(toWhomElementPattern, toWhomUser))).click();
     }
