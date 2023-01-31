@@ -8,11 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class MailRuLogInPage extends AbstractPage {
 
-
     private static String logInIFrame = "//iframe[contains(@src, 'mail.ru/login')]";
 
-    //    @FindBy(xpath = "//div/iframe[contains(@src, 'mail.ru/login')]")
-//    private WebElement logInPopUpIframe;
     @FindBy(xpath = "//div[@data-testid='logged-out-one-click']/button[text()='Войти']")
     private WebElement logInButton;
     @FindBy(css = "input[name='username']")
@@ -35,7 +32,6 @@ public class MailRuLogInPage extends AbstractPage {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(logInButton));
         logInButton.click();
 
-        //  driver.switchTo().frame(13);
         driver.switchTo().frame(driver.findElement(By.xpath(logInIFrame)));
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userNameLogInField));

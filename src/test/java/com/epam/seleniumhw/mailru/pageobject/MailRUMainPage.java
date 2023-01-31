@@ -92,7 +92,6 @@ public class MailRUMainPage extends AbstractPage {
 
         webDriverWait.until(ExpectedConditions.visibilityOfAllElements(emailListBlock));
 
-        //  webDriverWait.until(ExpectedConditions.elementToBeClickable(By.xpath(String.format(toWhomElementPattern, toWhomUser))));
         driver.findElement(By.xpath(String.format(toWhomElementPattern, toWhomUser))).click();
     }
 
@@ -117,7 +116,6 @@ public class MailRUMainPage extends AbstractPage {
         webDriverWait.until(ExpectedConditions.visibilityOf(sendEmailPopUpTextMsg));
         sendEmailCloseButton.click();
 
-        //driver.navigate().refresh();
         webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
 
     }
