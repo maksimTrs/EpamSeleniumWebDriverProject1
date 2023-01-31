@@ -21,8 +21,14 @@ import java.util.regex.Pattern;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class GoogleBonusTask {
 
+/**
+ * NOTE: to start this suite correctly, please change the path DIR in
+ * <google-bonus-task.xml> : name="directory" value="{path_dirname}"
+ */
+
+
+public class GoogleBonusTaskTest {
 
     private WebDriver driver;
 
@@ -39,42 +45,43 @@ public class GoogleBonusTask {
     public void checkBananaSong(String urlAddress, String directory) {
 
 
+        // Open Google Search
         driver.get(urlAddress);
-        driver.findElement(By.name("q")).sendKeys("Banana Song", Keys.ENTER);
-        driver.findElement(By.xpath("//a[contains(@href, 'youtube')][contains(., 'Despicable Me')]")).click();
 
+        // Search for <Banana Song>
+        driver.findElement(By.name("q")).sendKeys("Banana Song", Keys.ENTER);
+
+        // Find a YouTube link (<href> contains <youtube.com>) with <Despicable Me> in the text, follow this link
+        driver.findElement(By.xpath("//a[contains(@href, 'youtube')][contains(., 'Despicable Me')]")).click();
 
         WebDriverWait webDriverWait = new WebDriverWait(driver, 10);
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='start']//a[@id='logo']")));
         String pageTitle = driver.getTitle();
 
+        // Assert that we are on YouTube site (page title);
         assertThat(pageTitle).contains("YouTube");
 
+        // Get data that video was watched more than 50 million times (regex will help you)
         WebElement videoCountOfView = driver.findElement(By.xpath("//div[@id='description']//*[@id='info']/span[1]"));
-
         String videoCountOfViewText = videoCountOfView.getText();
 
         String pattern = "^\\d+";
-
-        Pattern intNumberOfViewsPattern =  Pattern.compile(pattern);
-
+        Pattern intNumberOfViewsPattern = Pattern.compile(pattern);
         Matcher matcher = intNumberOfViewsPattern.matcher(videoCountOfViewText);
-
         int countOfVideoView = 0;
         while (matcher.find()) {
             System.out.println("Found a number: " + matcher.group());
             countOfVideoView = Integer.parseInt(matcher.group());
         }
 
+        // Assert that video was watched more than 50 million times
         assertThat(countOfVideoView)
                 .as("video was watched less than 50 million times!")
                 .isGreaterThan(50);
 
 
+        // Save a script as “<YOUR_NAME>_BANANA.html” to your homework directory
         String pageSource = driver.getPageSource();
-
-
-        // Write the page source to a file in the specified directory
         try {
             FileUtils.writeStringToFile(new File(directory + "HW" + "_BANANA.html"), pageSource, "UTF-8");
         } catch (IOException e) {
@@ -82,6 +89,7 @@ public class GoogleBonusTask {
         }
 
     }
+
 
     @AfterTest(alwaysRun = true)
     public void tearDown() {
