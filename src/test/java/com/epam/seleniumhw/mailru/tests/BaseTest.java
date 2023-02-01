@@ -1,7 +1,8 @@
 package com.epam.seleniumhw.mailru.tests;
 
 
-import com.epam.seleniumhw.mailru.pageobject.MailRuLogInPage;
+import com.epam.seleniumhw.mailru.pageobject.LogInPage;
+import com.epam.seleniumhw.mailru.pageobject.MainPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import io.qameta.allure.Attachment;
@@ -22,12 +23,15 @@ public abstract class BaseTest {
     protected static Logger logger = Logger.getLogger(BaseTest.class);
     protected WebDriver driver;
 
+    public LogInPage logInPage;
+    public MainPage mainPage;
+
 
     @BeforeClass
     @Parameters({"urlAddress", "emailName", "emailPassword"})
     public void setUp(String urlAddress, String emailName, String emailPassword) {
 
-        String browserType = "CHROME"; // FIREFOX  CHROME
+        String browserType = "CHROME";
 
         if (System.getProperty("BROWSER") != null &&
                 System.getProperty("BROWSER").equalsIgnoreCase("FIREFOX")) {
@@ -40,13 +44,16 @@ public abstract class BaseTest {
 
         logger.info("+++++ AT Test was started for browser = " + browserType + " +++++");
 
-        MailRuLogInPage mailRuLogInPage = new MailRuLogInPage(driver);
-        mailRuLogInPage.doLogIn(urlAddress, emailName, handlingPassword(emailPassword));
+        logInPage = new LogInPage(driver);
+        mainPage = new MainPage(driver);
 
+        logInPage.doLogIn(urlAddress, emailName, handlingPassword(emailPassword));
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDown() {
+        logInPage = null;
+        mainPage = null;
         driver.quit();
     }
 
