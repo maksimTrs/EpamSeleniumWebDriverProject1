@@ -15,7 +15,9 @@ _mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-runner.xml"_
 _mvn clean test -DsuiteXmlFile="src/test/resources/google-bonus-task.xml"_
 
 #####
-_`NOTE:`_ to start this suite correctly, please change the path DIR in <google-bonus-task.xml> : name="directory" value="{path_dirname}"
+
+_`NOTE:`_ to start this suite correctly, please change the path DIR in <google-bonus-task.xml> : name="directory"
+value="{path_dirname}"
 
 ============================================================
 

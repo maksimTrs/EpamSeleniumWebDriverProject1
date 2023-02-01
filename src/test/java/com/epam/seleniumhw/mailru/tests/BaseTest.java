@@ -21,11 +21,9 @@ import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPas
 public abstract class BaseTest {
 
     protected static Logger logger = Logger.getLogger(BaseTest.class);
-    protected WebDriver driver;
-
     public LogInPage logInPage;
     public MainPage mainPage;
-
+    protected WebDriver driver;
 
     @BeforeClass
     @Parameters({"urlAddress", "emailName", "emailPassword"})
