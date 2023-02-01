@@ -7,11 +7,11 @@
         <parameter name="emailName" value="hokagemax777@mail.ru"/>
         <parameter name="emailPassword" value="aG9rYWdlbWF4MDIwNTkw"/>
         <classes>
-            <class name="com.epam.seleniumhw.mailru.tests.EmailLoginTest"/>
-          <!--  <class name="com.epam.seleniumhw.mailru.tests.EmailDraftCreationTest"/>
-            <class name="com.epam.seleniumhw.mailru.tests.EmailCompareDraftFieldsTest"/>
+            <!-- <class name="com.epam.seleniumhw.mailru.tests.EmailLoginTest"/>-->
+            <!--            <class name="com.epam.seleniumhw.mailru.tests.EmailDraftCreationTest"/>-->
+            <!--            <class name="com.epam.seleniumhw.mailru.tests.EmailCompareDraftFieldsTest"/>-->
             <class name="com.epam.seleniumhw.mailru.tests.EmailSendDraftEmailTest"/>
-            <class name="com.epam.seleniumhw.mailru.tests.EmailLogOutTest"/>-->
+            <!--            <class name="com.epam.seleniumhw.mailru.tests.EmailLogOutTest"/>-->
         </classes>
     </test>
 </suite>

@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class TestHelper {
 
-    public static List<String> getEmailListDataTestHelper(MainPage mainPage, MailPartitionNameList mailPartitionNameList) {
+    public static List<String> getStringEmailListFromWebElementList(MainPage mainPage, MailTypeEnaum mailTypeEnaum) {
 
-        List<String> listOfUsers = mainPage.getEmailList(mailPartitionNameList)
+        List<String> listOfUsers = mainPage.getEmailWebelementList(mailTypeEnaum)
                 .stream().map(WebElement::getText)
                 // .filter(row -> row.equals(toWhomAddressEmailField))
                 .flatMap(s -> Arrays.stream(s.split(" ")))
