@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class MailRuLogInPage extends AbstractPage {
+public class LogInPage extends BasePage {
 
     private static String logInIFrame = "//iframe[contains(@src, 'mail.ru/login')]";
 
@@ -22,7 +22,7 @@ public class MailRuLogInPage extends AbstractPage {
     private WebElement logInSubmitButton;
 
 
-    public MailRuLogInPage(WebDriver driver) {
+    public LogInPage(WebDriver driver) {
         super(driver);
     }
 

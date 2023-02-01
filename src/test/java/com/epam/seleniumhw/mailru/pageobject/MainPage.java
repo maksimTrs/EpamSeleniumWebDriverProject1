@@ -12,9 +12,9 @@ import java.util.List;
 
 import static com.epam.seleniumhw.mailru.utils.MailPartitionNameList.DRAFT;
 import static com.epam.seleniumhw.mailru.utils.MailPartitionNameList.SENT;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class MailRUMainPage extends AbstractPage {
-
+public class MainPage extends BasePage {
 
     private static String toWhomElementDraftList = "//a[contains(@href, '/drafts/')]//div[@class='llc__content']/div[1]/span[1]";
     private static String toWhomElementSentList = "//a[contains(@href, '/sent/')]//div[@class='llc__content']/div[1]/span[1]";
@@ -60,11 +60,10 @@ public class MailRUMainPage extends AbstractPage {
     private WebElement draftEmailListWaiter;
 
 
-
     private String toWhomElementPattern = "//a[contains(@href, 'drafts')]//div//span[@title='%s']";
 
 
-    public MailRUMainPage(WebDriver driver) {
+    public MainPage(WebDriver driver) {
         super(driver);
     }
 
@@ -173,15 +172,31 @@ public class MailRUMainPage extends AbstractPage {
     }
 
 
-    public MailRuLogInPage doLogOut() {
+    public LogInPage doLogOut() {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
         userMailAccountSection.click();
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(mailExitButton));
         mailExitButton.click();
 
-        return new MailRuLogInPage(driver);
+        return new LogInPage(driver);
     }
 
+
+    public static void validateEmailLogIn(MainPage mainPage, String expectedLogInAccountName) {
+        String actualLogInAccountName = mainPage.checkUserLogInName();
+
+        assertThat(actualLogInAccountName)
+                .as("Wrong email credentials OR page doesn't exist")
+                .isEqualTo(expectedLogInAccountName);
+    }
+
+    public  void validateEmailLogIn(String expectedLogInAccountName) {
+        String actualLogInAccountName = mainPage.checkUserLogInName();
+
+        assertThat(actualLogInAccountName)
+                .as("Wrong email credentials OR page doesn't exist")
+                .isEqualTo(expectedLogInAccountName);
+    }
 
 }
