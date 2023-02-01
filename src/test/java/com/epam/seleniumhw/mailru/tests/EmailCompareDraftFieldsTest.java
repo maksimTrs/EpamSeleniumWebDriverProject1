@@ -1,7 +1,7 @@
 package com.epam.seleniumhw.mailru.tests;
 
 
-import com.epam.seleniumhw.mailru.pageobject.MailRUMainPage;
+import com.epam.seleniumhw.mailru.pageobject.MainPage;
 import com.epam.seleniumhw.mailru.utils.TestDataProvider;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -23,11 +23,11 @@ public class EmailCompareDraftFieldsTest extends BaseTest {
             testName = "test_check_draft_email_main_fields")
     public void checkEmailFieldsTest(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
 
-        MailRUMainPage mailRUMainPage = new MailRUMainPage(driver);
-        mailRUMainPage.createNewDraftEmail(toWhomAddressEmailField, subjectEmailField, messageEmailField);
 
-        mailRUMainPage.openDraftEmail(toWhomAddressEmailField);
-        List<String> draftEmailFieldsData = mailRUMainPage.checkDraftEmailInternalFields();
+        mainPage.createNewDraftEmail(toWhomAddressEmailField, subjectEmailField, messageEmailField);
+
+        mainPage.openDraftEmail(toWhomAddressEmailField);
+        List<String> draftEmailFieldsData = mainPage.checkDraftEmailInternalFields();
 
         logger.info("List Filtering data = " + draftEmailFieldsData);
 

@@ -1,6 +1,6 @@
 package com.epam.seleniumhw.mailru.utils;
 
-import com.epam.seleniumhw.mailru.pageobject.MailRUMainPage;
+import com.epam.seleniumhw.mailru.pageobject.MainPage;
 import org.openqa.selenium.WebElement;
 
 import java.util.Arrays;
@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class TestHelper {
 
-    public static List<String> getEmailListDataTestHelper(MailRUMainPage mailRUMainPage, MailPartitionNameList mailPartitionNameList) {
+    public static List<String> getEmailListDataTestHelper(MainPage mainPage, MailPartitionNameList mailPartitionNameList) {
 
-        List<String> listOfUsers = mailRUMainPage.getEmailList(mailPartitionNameList)
+        List<String> listOfUsers = mainPage.getEmailList(mailPartitionNameList)
                 .stream().map(WebElement::getText)
                 // .filter(row -> row.equals(toWhomAddressEmailField))
                 .flatMap(s -> Arrays.stream(s.split(" ")))
