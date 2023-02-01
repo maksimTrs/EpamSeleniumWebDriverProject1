@@ -21,7 +21,6 @@ public class LogInPage extends BasePage {
     @FindBy(xpath = "//button[@data-test-id='submit-button']")
     private WebElement logInSubmitButton;
 
-
     public LogInPage(WebDriver driver) {
         super(driver);
     }

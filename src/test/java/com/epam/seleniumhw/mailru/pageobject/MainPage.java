@@ -1,6 +1,6 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
-import com.epam.seleniumhw.mailru.utils.MailTypeEnaum;
+import com.epam.seleniumhw.mailru.utils.MailTypeEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,8 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.seleniumhw.mailru.utils.MailTypeEnaum.DRAFT;
-import static com.epam.seleniumhw.mailru.utils.MailTypeEnaum.SENT;
+import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.DRAFT;
+import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.SENT;
 import static com.epam.seleniumhw.mailru.utils.TestHelper.getStringEmailListFromWebElementList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -63,7 +63,6 @@ public class MainPage extends BasePage {
 
     private String toWhomElementPattern = "//a[contains(@href, 'drafts')]//div//span[@title='%s']";
 
-
     public MainPage(WebDriver driver) {
         super(driver);
     }
@@ -72,7 +71,6 @@ public class MainPage extends BasePage {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
         return userMailAccountName.getText();
     }
-
 
     public void createNewDraftEmail(String toWhomAddressEmail, String subjectEmail, String messageEmail) {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
@@ -90,13 +88,11 @@ public class MainPage extends BasePage {
         emailClosePopUpButton.click();
     }
 
-
     public void openDraftEmail(String toWhomUser) {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
         draftEmailPartition.click();
 
         //webDriverWait.until(ExpectedConditions.visibilityOfAllElements(emailListBlock));
-
         webDriverWait.until(ExpectedConditions.visibilityOfAllElements(draftEmailListWaiter));
 
         driver.findElement(By.xpath(String.format(toWhomElementPattern, toWhomUser))).click();
@@ -124,17 +120,15 @@ public class MainPage extends BasePage {
         sendEmailCloseButton.click();
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
-
     }
 
-    public List<WebElement> getEmailWebelementList(MailTypeEnaum mailTypeEnaum) {
+    public List<WebElement> getEmailWebelementList(MailTypeEnum mailTypeEnum) {
 
         List<WebElement> textValuesOfEmail = new ArrayList<>();
 
-        if (mailTypeEnaum == DRAFT) {
+        if (mailTypeEnum == DRAFT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
             draftEmailPartition.click();
-
 
             webDriverWait.until(ExpectedConditions.visibilityOfAllElements(emailListBlock));
 
@@ -150,7 +144,7 @@ public class MainPage extends BasePage {
 
         }
 
-        if (mailTypeEnaum == SENT) {
+        if (mailTypeEnum == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
             sentEmailPartition.click();
 
@@ -183,8 +177,7 @@ public class MainPage extends BasePage {
     }
 
 
-
-    public  void validateEmailLogIn(String expectedLogInAccountName) {
+    public void validateEmailLogIn(String expectedLogInAccountName) {
         String actualLogInAccountName = this.getUserLogInName();
 
         assertThat(actualLogInAccountName)
@@ -192,8 +185,8 @@ public class MainPage extends BasePage {
                 .isEqualTo(expectedLogInAccountName);
     }
 
-    public void validateEmailListWithCurrentUser(String toWhomAddressEmailField, MailTypeEnaum mailTypeEnaum) {
-        List<String> listOfDraftUsers = getStringEmailListFromWebElementList(this, mailTypeEnaum);
+    public void validateEmailListWithCurrentUser(String toWhomAddressEmailField, MailTypeEnum mailTypeEnum) {
+        List<String> listOfDraftUsers = getStringEmailListFromWebElementList(this, mailTypeEnum);
 
         assertThat(listOfDraftUsers).as("Wrong mapping data!")
                 .isNotEmpty()
@@ -209,4 +202,13 @@ public class MainPage extends BasePage {
                 .isNotEmpty()
                 .containsExactly(toWhomAddressEmailField, subjectEmailField, messageEmailField);
     }
+
+    public void validateLogOut() {
+        boolean logoutStatus = this.doLogOut().checkLogOut();
+
+        assertThat(logoutStatus)
+                .as("The user still doesn't log out!")
+                .isTrue();
+    }
+
 }

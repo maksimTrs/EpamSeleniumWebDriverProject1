@@ -1,6 +1,6 @@
 package com.epam.seleniumhw.mailru.utils;
 
-public enum MailTypeEnaum {
+public enum MailTypeEnum {
     DRAFT,
     SENT
 }

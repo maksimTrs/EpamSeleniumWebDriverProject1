@@ -8,12 +8,7 @@ import io.qameta.allure.Story;
 import io.qameta.allure.testng.Tag;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
-import static com.epam.seleniumhw.mailru.utils.MailTypeEnaum.DRAFT;
-import static com.epam.seleniumhw.mailru.utils.MailTypeEnaum.SENT;
-import static com.epam.seleniumhw.mailru.utils.TestHelper.getStringEmailListFromWebElementList;
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.SENT;
 
 
 @Epic("Selenium_HW")
@@ -27,24 +22,8 @@ public class EmailSendDraftEmailTest extends BaseTest {
             testName = "test_check_send_draft_email")
     public void sendDraftEmailToUserTest(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
 
-
         mainPage.createNewDraftEmail(toWhomAddressEmailField, subjectEmailField, messageEmailField);
-
         mainPage.sendDraftEmail(toWhomAddressEmailField);
-
-
-        List<String> listOfSentUsers = getStringEmailListFromWebElementList(mainPage, SENT);
-
-        assertThat(listOfSentUsers).as("Wrong mapping data!")
-                .isNotEmpty()
-                .contains(toWhomAddressEmailField);
-
-
-        List<String> listOfDraftUsers = getStringEmailListFromWebElementList(mainPage, DRAFT);
-
-
-        assertThat(listOfDraftUsers).as("Draft Email is  still located on Draft Partition!")
-                .doesNotContain(toWhomAddressEmailField);
+        mainPage.validateEmailListWithCurrentUser(toWhomAddressEmailField, SENT);
     }
-
 }

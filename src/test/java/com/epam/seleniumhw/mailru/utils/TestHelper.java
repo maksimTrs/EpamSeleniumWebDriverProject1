@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class TestHelper {
 
-    public static List<String> getStringEmailListFromWebElementList(MainPage mainPage, MailTypeEnaum mailTypeEnaum) {
+    public static List<String> getStringEmailListFromWebElementList(MainPage mainPage, MailTypeEnum mailTypeEnum) {
 
-        List<String> listOfUsers = mainPage.getEmailWebelementList(mailTypeEnaum)
+        List<String> listOfUsers = mainPage.getEmailWebelementList(mailTypeEnum)
                 .stream().map(WebElement::getText)
                 // .filter(row -> row.equals(toWhomAddressEmailField))
                 .flatMap(s -> Arrays.stream(s.split(" ")))
@@ -20,6 +20,5 @@ public class TestHelper {
         System.out.println("List Filtering data = " + listOfUsers);
 
         return listOfUsers;
-
     }
 }

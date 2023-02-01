@@ -8,11 +8,7 @@ import io.qameta.allure.Story;
 import io.qameta.allure.testng.Tag;
 import org.testng.annotations.Test;
 
-import java.util.List;
-
-import static com.epam.seleniumhw.mailru.utils.MailTypeEnaum.DRAFT;
-import static com.epam.seleniumhw.mailru.utils.TestHelper.getStringEmailListFromWebElementList;
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.DRAFT;
 
 @Epic("Selenium_HW")
 @Feature("Test_MailRu_Box")
@@ -26,7 +22,5 @@ public class EmailDraftCreationTest extends BaseTest {
 
         mainPage.createNewDraftEmail(toWhomAddressEmailField, subjectEmailField, messageEmailField);
         mainPage.validateEmailListWithCurrentUser(toWhomAddressEmailField, DRAFT);
-
-
     }
 }
