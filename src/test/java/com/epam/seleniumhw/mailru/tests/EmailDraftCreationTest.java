@@ -1,7 +1,7 @@
 package com.epam.seleniumhw.mailru.tests;
 
 
-import com.epam.seleniumhw.mailru.pageobject.MailRUMainPage;
+import com.epam.seleniumhw.mailru.pageobject.MainPage;
 import com.epam.seleniumhw.mailru.utils.TestDataProvider;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -25,10 +25,9 @@ public class EmailDraftCreationTest extends BaseTest {
             testName = "test_check_draft_email_exists")
     public void createDraftEmailTest(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
 
-        MailRUMainPage mailRUMainPage = new MailRUMainPage(driver);
-        mailRUMainPage.createNewDraftEmail(toWhomAddressEmailField, subjectEmailField, messageEmailField);
+        mainPage.createNewDraftEmail(toWhomAddressEmailField, subjectEmailField, messageEmailField);
 
-        List<String> listOfDraftUsers = getEmailListDataTestHelper(mailRUMainPage, DRAFT);
+        List<String> listOfDraftUsers = getEmailListDataTestHelper(mainPage, DRAFT);
 
         assertThat(listOfDraftUsers).as("Wrong mapping data!")
                 .isNotEmpty()

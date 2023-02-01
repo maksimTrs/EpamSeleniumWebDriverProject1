@@ -1,7 +1,7 @@
 package com.epam.seleniumhw.mailru.tests;
 
 
-import com.epam.seleniumhw.mailru.pageobject.MailRUMainPage;
+import com.epam.seleniumhw.mailru.pageobject.MainPage;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -19,9 +19,7 @@ public class EmailLogOutTest extends BaseTest {
     @Test(testName = "email_log_out_test")
     public void logOutTest() {
 
-        MailRUMainPage mailRUMainPage = new MailRUMainPage(driver);
-
-        boolean logoutStatus = mailRUMainPage.doLogOut().checkLogOut();
+        boolean logoutStatus = mainPage.doLogOut().checkLogOut();
 
         assertThat(logoutStatus)
                 .as("The user still doesn't log out!")

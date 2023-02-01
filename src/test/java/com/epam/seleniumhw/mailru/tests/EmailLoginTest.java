@@ -1,6 +1,6 @@
 package com.epam.seleniumhw.mailru.tests;
 
-import com.epam.seleniumhw.mailru.pageobject.MailRUMainPage;
+import com.epam.seleniumhw.mailru.pageobject.MainPage;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -19,13 +19,15 @@ public class EmailLoginTest extends BaseTest {
     @Story("Test Email box login")
     @Test(testName = "email_login_test")
     @Parameters({"emailName"})
-    public void logInTest(String emailName) {
+    public void logInTest(String expectedLogInAccountName) {
 
-        MailRUMainPage mailRUMainPage = new MailRUMainPage(driver);
-        String userEmailLogInAccountName = mailRUMainPage.checkUserLogInName();
+      /*  String actualLogInAccountName = mainPage.checkUserLogInName();
 
-        assertThat(userEmailLogInAccountName)
+        assertThat(actualLogInAccountName)
                 .as("Wrong email credentials OR page doesn't exist")
-                .isEqualTo(emailName);
+                .isEqualTo(expectedLogInAccountName);*/
+
+      //  MainPage.validateEmailLogIn(mainPage, expectedLogInAccountName);
+        mainPage.validateEmailLogIn(expectedLogInAccountName);
     }
 }
