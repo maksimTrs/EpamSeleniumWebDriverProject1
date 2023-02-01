@@ -21,13 +21,6 @@ public class EmailLoginTest extends BaseTest {
     @Parameters({"emailName"})
     public void logInTest(String expectedLogInAccountName) {
 
-      /*  String actualLogInAccountName = mainPage.checkUserLogInName();
-
-        assertThat(actualLogInAccountName)
-                .as("Wrong email credentials OR page doesn't exist")
-                .isEqualTo(expectedLogInAccountName);*/
-
-      //  MainPage.validateEmailLogIn(mainPage, expectedLogInAccountName);
         mainPage.validateEmailLogIn(expectedLogInAccountName);
     }
 }

@@ -1,7 +1,6 @@
 package com.epam.seleniumhw.mailru.tests;
 
 
-import com.epam.seleniumhw.mailru.pageobject.MainPage;
 import com.epam.seleniumhw.mailru.utils.TestDataProvider;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -11,9 +10,9 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static com.epam.seleniumhw.mailru.utils.MailPartitionNameList.DRAFT;
-import static com.epam.seleniumhw.mailru.utils.MailPartitionNameList.SENT;
-import static com.epam.seleniumhw.mailru.utils.TestHelper.getEmailListDataTestHelper;
+import static com.epam.seleniumhw.mailru.utils.MailTypeEnaum.DRAFT;
+import static com.epam.seleniumhw.mailru.utils.MailTypeEnaum.SENT;
+import static com.epam.seleniumhw.mailru.utils.TestHelper.getStringEmailListFromWebElementList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -34,14 +33,14 @@ public class EmailSendDraftEmailTest extends BaseTest {
         mainPage.sendDraftEmail(toWhomAddressEmailField);
 
 
-        List<String> listOfSentUsers = getEmailListDataTestHelper(mainPage, SENT);
+        List<String> listOfSentUsers = getStringEmailListFromWebElementList(mainPage, SENT);
 
         assertThat(listOfSentUsers).as("Wrong mapping data!")
                 .isNotEmpty()
                 .contains(toWhomAddressEmailField);
 
 
-        List<String> listOfDraftUsers = getEmailListDataTestHelper(mainPage, DRAFT);
+        List<String> listOfDraftUsers = getStringEmailListFromWebElementList(mainPage, DRAFT);
 
 
         assertThat(listOfDraftUsers).as("Draft Email is  still located on Draft Partition!")

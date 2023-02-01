@@ -23,16 +23,8 @@ public class EmailCompareDraftFieldsTest extends BaseTest {
             testName = "test_check_draft_email_main_fields")
     public void checkEmailFieldsTest(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
 
-
         mainPage.createNewDraftEmail(toWhomAddressEmailField, subjectEmailField, messageEmailField);
-
         mainPage.openDraftEmail(toWhomAddressEmailField);
-        List<String> draftEmailFieldsData = mainPage.checkDraftEmailInternalFields();
-
-        logger.info("List Filtering data = " + draftEmailFieldsData);
-
-        assertThat(draftEmailFieldsData).as("Wrong mapping data!")
-                .isNotEmpty()
-                .containsExactly(toWhomAddressEmailField, subjectEmailField, messageEmailField);
+        mainPage.validateDraftEmailFieldsData(toWhomAddressEmailField, subjectEmailField, messageEmailField);
     }
 }

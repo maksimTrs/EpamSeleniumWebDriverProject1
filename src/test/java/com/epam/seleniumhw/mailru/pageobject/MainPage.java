@@ -1,6 +1,6 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
-import com.epam.seleniumhw.mailru.utils.MailPartitionNameList;
+import com.epam.seleniumhw.mailru.utils.MailTypeEnaum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,8 +10,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.seleniumhw.mailru.utils.MailPartitionNameList.DRAFT;
-import static com.epam.seleniumhw.mailru.utils.MailPartitionNameList.SENT;
+import static com.epam.seleniumhw.mailru.utils.MailTypeEnaum.DRAFT;
+import static com.epam.seleniumhw.mailru.utils.MailTypeEnaum.SENT;
+import static com.epam.seleniumhw.mailru.utils.TestHelper.getStringEmailListFromWebElementList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MainPage extends BasePage {
@@ -67,7 +68,7 @@ public class MainPage extends BasePage {
         super(driver);
     }
 
-    public String checkUserLogInName() {
+    public String getUserLogInName() {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
         return userMailAccountName.getText();
     }
@@ -126,11 +127,11 @@ public class MainPage extends BasePage {
 
     }
 
-    public List<WebElement> getEmailList(MailPartitionNameList mailPartitionNameList) {
+    public List<WebElement> getEmailWebelementList(MailTypeEnaum mailTypeEnaum) {
 
         List<WebElement> textValuesOfEmail = new ArrayList<>();
 
-        if (mailPartitionNameList == DRAFT) {
+        if (mailTypeEnaum == DRAFT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
             draftEmailPartition.click();
 
@@ -149,10 +150,9 @@ public class MainPage extends BasePage {
 
         }
 
-        if (mailPartitionNameList == SENT) {
+        if (mailTypeEnaum == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
             sentEmailPartition.click();
-
 
             webDriverWait.until(ExpectedConditions.visibilityOfAllElements(emailListBlock));
 
@@ -183,20 +183,30 @@ public class MainPage extends BasePage {
     }
 
 
-    public static void validateEmailLogIn(MainPage mainPage, String expectedLogInAccountName) {
-        String actualLogInAccountName = mainPage.checkUserLogInName();
-
-        assertThat(actualLogInAccountName)
-                .as("Wrong email credentials OR page doesn't exist")
-                .isEqualTo(expectedLogInAccountName);
-    }
 
     public  void validateEmailLogIn(String expectedLogInAccountName) {
-        String actualLogInAccountName = mainPage.checkUserLogInName();
+        String actualLogInAccountName = this.getUserLogInName();
 
         assertThat(actualLogInAccountName)
                 .as("Wrong email credentials OR page doesn't exist")
                 .isEqualTo(expectedLogInAccountName);
     }
 
+    public void validateEmailListWithCurrentUser(String toWhomAddressEmailField, MailTypeEnaum mailTypeEnaum) {
+        List<String> listOfDraftUsers = getStringEmailListFromWebElementList(this, mailTypeEnaum);
+
+        assertThat(listOfDraftUsers).as("Wrong mapping data!")
+                .isNotEmpty()
+                .contains(toWhomAddressEmailField);
+    }
+
+    public void validateDraftEmailFieldsData(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
+        List<String> draftEmailFieldsData = this.checkDraftEmailInternalFields();
+
+        System.out.println("List Filtering data = " + draftEmailFieldsData);
+
+        assertThat(draftEmailFieldsData).as("Wrong mapping data!")
+                .isNotEmpty()
+                .containsExactly(toWhomAddressEmailField, subjectEmailField, messageEmailField);
+    }
 }
