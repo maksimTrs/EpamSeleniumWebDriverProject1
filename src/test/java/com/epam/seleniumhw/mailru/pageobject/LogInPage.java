@@ -48,7 +48,7 @@ public class LogInPage extends BasePage {
         driver.switchTo().defaultContent();
     }
 
-    public boolean checkLogOut() {
+    public boolean validateLogOut() {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(logInButton));
 
         return (logInButton.isDisplayed() || logInButton.isEnabled());

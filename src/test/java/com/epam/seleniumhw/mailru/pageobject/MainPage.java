@@ -98,7 +98,7 @@ public class MainPage extends BasePage {
         driver.findElement(By.xpath(String.format(toWhomElementPattern, toWhomUser))).click();
     }
 
-    public List<String> checkDraftEmailInternalFields() {
+    public List<String> getDraftEmailInternalFields() {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
 
         List<String> draftEmailInternalData = new ArrayList<>();
@@ -194,7 +194,7 @@ public class MainPage extends BasePage {
     }
 
     public void validateDraftEmailFieldsData(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
-        List<String> draftEmailFieldsData = this.checkDraftEmailInternalFields();
+        List<String> draftEmailFieldsData = this.getDraftEmailInternalFields();
 
         System.out.println("List Filtering data = " + draftEmailFieldsData);
 
@@ -204,7 +204,7 @@ public class MainPage extends BasePage {
     }
 
     public void validateLogOut() {
-        boolean logoutStatus = this.doLogOut().checkLogOut();
+        boolean logoutStatus = this.doLogOut().validateLogOut();
 
         assertThat(logoutStatus)
                 .as("The user still doesn't log out!")
