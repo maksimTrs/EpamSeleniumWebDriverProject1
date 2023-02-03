@@ -3,8 +3,7 @@ package com.epam.seleniumhw.mailru.tests;
 
 import com.epam.seleniumhw.mailru.pageobject.LogInPage;
 import com.epam.seleniumhw.mailru.pageobject.MainPage;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import io.github.bonigarcia.wdm.config.DriverManagerType;
+import com.epam.seleniumhw.mailru.utils.BrowserDriverManager;
 import io.qameta.allure.Attachment;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
@@ -14,7 +13,9 @@ import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.LOCAL;
 import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
 
 
@@ -30,15 +31,14 @@ public abstract class BaseTest {
     public void setUp(String urlAddress, String emailName, String emailPassword) {
 
         String browserType = "CHROME";
+        String host = "localhost";
 
-        if (System.getProperty("BROWSER") != null &&
-                System.getProperty("BROWSER").equalsIgnoreCase("FIREFOX")) {
-            browserType = "FIREFOX";
-        }
+        BrowserDriverManager browserDriverManager = new BrowserDriverManager();
 
-        driver = WebDriverManager.getInstance(DriverManagerType.valueOf(browserType.toUpperCase())).create();
-        driver.manage().window().maximize();
-        // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        driver = browserDriverManager.createInstance(browserType, LOCAL, host);
+
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         logger.info("+++++ AT Test was started for browser = " + browserType + " +++++");
 
