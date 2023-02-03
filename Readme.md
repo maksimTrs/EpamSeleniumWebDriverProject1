@@ -1,11 +1,32 @@
-mvn test -DsuiteXmlFile="src/test/resources/mail-ru-runner.xml"
+**To start main tests run maven command:**
 
-mvn test -Dgroups=test1.xml,test2.xml
-mvn clean install && mvn allure:serve
-mvn clean install && mvn allure:report
+mvn clean test
 
 
-ENTRYPOINT java -cp selenium-docker.jar:selenium-docker-tests.jar:libs/* -DBROWSER=$BROWSER -DHUB_HOST=$HUB_HOST org.testng.TestNG $MODULE
-mvn test -Dbrowser=chrome
+**To start main tests with Edge browser run maven command:**
 
-String browserName = getParameter("browser")
+mvn clean test -DBROWSER=edge
+
+============================================================
+
+**To start main tests with testNG xml:**
+
+mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-runner.xml"
+
+============================================================
+
+**To start bonus task use command:**
+
+mvn clean test -DsuiteXmlFile="src/test/resources/google-bonus-task.xml"
+
+#####
+
+_`NOTE:`_ to start this suite correctly, please change the path DIR in <google-bonus-task.xml> : name="directory"
+value="{path_dirname}"
+
+============================================================
+
+**To start allure report use command _`after`_ tests:**
+
+mvn allure:serve
+

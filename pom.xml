@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -49,6 +49,7 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.19.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -77,6 +78,12 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -109,8 +116,19 @@
                     </argLine>
                     <suiteXmlFiles>
                         <!--suppress UnresolvedMavenProperty -->
-                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+                        <!--                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>-->
+                        <suiteXmlFile>src/test/resources/mail-ru-runner.xml</suiteXmlFile>
                     </suiteXmlFiles>
+                    <!--       <properties>
+                               <property>
+                                   <name>usedefaultlisteners</name>
+                                   <value>true</value>
+                               </property>
+                           </properties>-->
+                    <!--  <includes>
+                          <include>com/mypackage/**</include>
+                      </includes>
+                      <test>**/*Tests</test>-->
                 </configuration>
             </plugin>
             <plugin>

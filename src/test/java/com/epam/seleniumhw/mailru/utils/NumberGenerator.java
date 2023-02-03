@@ -4,11 +4,6 @@ import java.util.Random;
 
 public class NumberGenerator {
 
-    public static int generateNumber() {
-        return (int) Math.ceil(Math.random() * (101 - 51 + 1) + 49);
-    }
-
-
     public static String getRandomFirstDomainLvl() {
         StringBuilder init = new StringBuilder();
         Random r = new Random();
@@ -25,7 +20,4 @@ public class NumberGenerator {
         return rand.nextInt(upperbound);
     }
 
-    public static int getIntRandomValueForMobile(int a, int b) {
-        return ((int) (Math.random() * a + b));
-    }
 }
