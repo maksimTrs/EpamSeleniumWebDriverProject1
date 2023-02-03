@@ -1,22 +1,18 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
-import com.epam.seleniumhw.mailru.pageobjecthelper.ActionHelper;
-import com.epam.seleniumhw.mailru.pageobjecthelper.JscriptExecutorHelper;
+import com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.ActionHelper;
 import com.epam.seleniumhw.mailru.utils.MailTypeEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.seleniumhw.mailru.pageobjecthelper.JscriptExecutorHelper.clickOnSpecifiedElementHelper;
-import static com.epam.seleniumhw.mailru.pageobjecthelper.JscriptExecutorHelper.getSpecifiedElementAttributeText;
+import static com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.JscriptExecutorHelper.*;
 import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.DRAFT;
 import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.SENT;
 import static com.epam.seleniumhw.mailru.utils.TestHelper.getStringEmailListFromWebElementList;
@@ -75,6 +71,18 @@ public class MainPage extends BasePage {
 
     @FindBy(xpath = "//a[contains(@href, 'sent')]//following::div[@data-qa-id='clear']//span[text()='Очистить содержимое']")
     private WebElement clearSentEmailsButton;
+
+    @FindBy(xpath = "//tbody//span[@data-title-shortcut='Ctrl+A'][@title='Выделить все']")
+    private WebElement selectAllEmailsButton;
+
+    @FindBy(xpath = "//tbody//span[@data-title-shortcut='Del']")
+    private WebElement deleteAllEmailsButton;
+
+    @FindBy(xpath = "//div/span[@class='octopus__title']")
+    private WebElement deleteMessageText;
+
+    @FindBy(xpath = "//a[contains(@href, '/inbox/?')]")
+    private WebElement incomingEmailsPartition;
 
 
     private String toWhomElementPattern = "//a[contains(@href, 'drafts')]//div//span[@title='%s']";
@@ -246,8 +254,8 @@ public class MainPage extends BasePage {
 
             new ActionHelper().moveToElementAndRightClickHelper(driver, draftEmailPartition);
 
-            clickOnSpecifiedElementHelper(jscriptExecutor,clearDraftEmailsButton);
-            clickOnSpecifiedElementHelper(jscriptExecutor,clearEmailsPartitionConfirmButton);
+            clickOnSpecifiedElementHelper(jscriptExecutor, clearDraftEmailsButton);
+            clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);
         } else if (mailTypeEnum == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
       /*      new Actions(driver)
@@ -261,8 +269,8 @@ public class MainPage extends BasePage {
 
             new ActionHelper().moveToElementAndRightClickHelper(driver, sentEmailPartition);
 
-            clickOnSpecifiedElementHelper(jscriptExecutor,clearSentEmailsButton);
-            clickOnSpecifiedElementHelper(jscriptExecutor,clearEmailsPartitionConfirmButton);
+            clickOnSpecifiedElementHelper(jscriptExecutor, clearSentEmailsButton);
+            clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);
 
         }
     }
@@ -275,7 +283,7 @@ public class MainPage extends BasePage {
 
         if (mailTypeEnum == DRAFT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
-           // text = (String) jscriptExecutor.executeScript("return arguments[0].getAttribute('data-title');", draftEmailPartition);
+            // text = (String) jscriptExecutor.executeScript("return arguments[0].getAttribute('data-title');", draftEmailPartition);
             text = getSpecifiedElementAttributeText(jscriptExecutor, "title", draftEmailPartition);
 
             assertThat(text)
@@ -290,6 +298,32 @@ public class MainPage extends BasePage {
                     .as("Real value = " + text)
                     .isEqualTo("Отправленные, нет писем");
         }
+        System.out.println("Result of deletion: " + text);
+    }
+
+
+    public void deleteEmailsFromIncomingPartition() {
+
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
+        driver.navigate().refresh();
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
+
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(incomingEmailsPartition));
+        incomingEmailsPartition.click();
+
+
+        new ActionHelper().moveToElementAndClickOnElementHelper(driver, selectAllEmailsButton, deleteAllEmailsButton);
+        clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);
+    }
+
+    public void validateEmptyEmailIncomingPartition() {
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
+        String text = getSpecifiedElementText(jscriptExecutor, deleteMessageText);
+
+        assertThat(text.trim())
+                .as("Real value = " + text)
+                .isEqualTo("Писем нет");
+
         System.out.println("Result of deletion: " + text);
     }
 }

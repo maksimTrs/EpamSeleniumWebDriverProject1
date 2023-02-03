@@ -13,7 +13,7 @@ import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.SENT;
 @Epic("Selenium_HW")
 @Feature("Test_MailRu_Box")
 @Tag("UI_AT_Tests")
-public class EmailCleanTestingDataTest extends BaseTest{
+public class EmailCleanTestingDataTest extends BaseTest {
 
 
     @Story("Delete emails from mailbox")
@@ -25,6 +25,9 @@ public class EmailCleanTestingDataTest extends BaseTest{
 
         mainPage.deleteEmails(SENT);
         mainPage.validateEmptyEmailPartition(SENT);
+
+        mainPage.deleteEmailsFromIncomingPartition();
+        mainPage.validateEmptyEmailIncomingPartition();
 
     }
 
