@@ -33,18 +33,13 @@ public abstract class BaseTest {
         String browserType = "CHROME";
         String host = "localhost";
 
-        BrowserDriverManager browserDriverManager = new BrowserDriverManager();
-
-
-        driver = browserDriverManager.createInstance(browserType, LOCAL, host);
-
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver = new BrowserDriverManager().createInstance(browserType, LOCAL, host);
+        driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
 
         logger.info("+++++ AT Test was started for browser = " + browserType + " +++++");
 
         logInPage = new LogInPage(driver);
         mainPage = new MainPage(driver);
-
         logInPage.doLogIn(urlAddress, emailName, handlingPassword(emailPassword));
     }
 

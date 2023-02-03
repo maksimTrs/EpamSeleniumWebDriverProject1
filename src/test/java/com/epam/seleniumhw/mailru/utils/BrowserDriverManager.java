@@ -13,18 +13,14 @@ public class BrowserDriverManager {
         if (System.getProperty("HUB_HOST") != null && (!System.getProperty("HUB_HOST").isEmpty())) {
             host = System.getProperty("HUB_HOST");
         }
-
         if (System.getProperty("BROWSER") != null &&
                 System.getProperty("BROWSER").equalsIgnoreCase("EDGE")) {
             browser = "EDGE";
         }
 
-
         String path = "http://" + host + ":4444/wd/hub";
         WebDriver driver = null;
-
         DriverManagerType driverManagerType = DriverManagerType.valueOf(browser.toUpperCase());
-
 
         if (browserType.equals(BrowserType.SELENIUM_GRID)) {
             driver = WebDriverManager.getInstance(driverManagerType).remoteAddress(path).create();
