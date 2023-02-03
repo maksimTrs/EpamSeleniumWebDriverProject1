@@ -4,18 +4,16 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import org.openqa.selenium.WebDriver;
 
-import java.net.MalformedURLException;
-
 public class BrowserDriverManager {
 
-    public WebDriver createInstance(String browser, BrowserType browserType, String host)  {
+    public WebDriver createInstance(String browser, BrowserType browserType, String host) {
 
         if (System.getProperty("HUB_HOST") != null && (!System.getProperty("HUB_HOST").isEmpty())) {
             host = System.getProperty("HUB_HOST");
         }
         if (System.getProperty("BROWSER") != null &&
                 System.getProperty("BROWSER").equalsIgnoreCase("EDGE")) {
-            browser = "EDGE";
+            browser = System.getProperty("BROWSER");
         }
 
         String path = "http://" + host + ":4444/wd/hub";

@@ -2,7 +2,6 @@
 
 mvn clean test
 
-
 **To start main tests with Edge browser run maven command:**
 
 mvn clean test -DBROWSER=edge
