@@ -1,18 +1,23 @@
 **To start main tests run maven command:**
 
-_mvn clean test_
+mvn clean test
+
+
+**To start main tests with Edge browser run maven command:**
+
+mvn clean test -DBROWSER=edge
 
 ============================================================
 
 **To start main tests with testNG xml:**
 
-_mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-runner.xml"_
+mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-runner.xml"
 
 ============================================================
 
 **To start bonus task use command:**
 
-_mvn clean test -DsuiteXmlFile="src/test/resources/google-bonus-task.xml"_
+mvn clean test -DsuiteXmlFile="src/test/resources/google-bonus-task.xml"
 
 #####
 
@@ -22,5 +27,6 @@ value="{path_dirname}"
 ============================================================
 
 **To start allure report use command _`after`_ tests:**
+
 mvn allure:serve
 
