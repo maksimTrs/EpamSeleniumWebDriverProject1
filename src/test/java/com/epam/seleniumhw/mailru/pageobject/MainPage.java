@@ -97,16 +97,28 @@ public class MainPage extends BasePage {
     }
 
     public void createNewDraftEmail(String toWhomAddressEmail, String subjectEmail, String messageEmail) {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor)driver;
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
         driver.navigate().refresh();
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(createEmailButton));
-        createEmailButton.click();
+        try {
+            createEmailButton.click();
+        } catch (Exception e) {
+            driver.navigate().refresh();
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(createEmailButton));
+            createEmailButton.click();
+        }
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(toWhomAddressEmailField));
         toWhomAddressEmailField.sendKeys(toWhomAddressEmail);
         subjectEmailField.sendKeys(subjectEmail);
-        messageEmailField.sendKeys(messageEmail);
+
+        try {
+            messageEmailField.sendKeys(messageEmail);
+        } catch (Exception e) {
+            jsExecutor.executeScript(String.format("document.querySelector(\"div[role='textbox'] > div:first-of-type\").innerHTML='%s'", messageEmail));
+        }
 
         emailSaveButton.click();
         emailClosePopUpButton.click();
