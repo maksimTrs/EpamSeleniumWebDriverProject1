@@ -1,0 +1,56 @@
+version: "3"
+services:
+  hub:
+    image: selenium/hub:4.7.2-20221219
+    container_name: selenium-hub-epam-1
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+  chrome:
+    image: selenium/node-chrome:4.7.2-20221219
+    shm_size: 2gb
+    volumes:
+      - E:\MAX\IT\Logging\testimages:/opt/selenium/testimages
+    depends_on:
+      - hub
+    environment:
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_INSTANCES=4
+      - SE_NODE_MAX_SESSIONS=4
+  edge:
+    image: selenium/node-edge:4.7.2-20221219
+    shm_size: 1gb
+    depends_on:
+      - hub
+    environment:
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_INSTANCES=4
+      - SE_NODE_MAX_SESSIONS=4
+  chrome_video:
+    image: selenium/video:ffmpeg-4.3.1-20221219
+    volumes:
+      - E:\MAX\IT\Logging\java_for_testers\chrome:/videos
+    depends_on:
+      - chrome
+    environment:
+      - DISPLAY_CONTAINER_NAME=chrome
+      - FILE_NAME=chrome_video.mp4
+  edge_video:
+    image: selenium/video:ffmpeg-4.3.1-20221219
+    volumes:
+      - E:\MAX\IT\Logging\java_for_testers\edge:/videos
+    depends_on:
+      - edge
+    environment:
+      - DISPLAY_CONTAINER_NAME=firefox
+      - FILE_NAME=firefox_video.mp4
+
+  # docker compose up
+  # docker compose up  -d --scale chrome=2 --scale edge=2
+
+

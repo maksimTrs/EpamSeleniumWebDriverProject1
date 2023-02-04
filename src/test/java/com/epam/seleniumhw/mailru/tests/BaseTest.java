@@ -16,27 +16,28 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.LOCAL;
+import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.SELENIUM_GRID;
 import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
 
 
 public abstract class BaseTest {
 
     protected static Logger logger = Logger.getLogger(BaseTest.class);
-    public LogInPage logInPage;
-    public MainPage mainPage;
+    protected LogInPage logInPage;
+    protected MainPage mainPage;
     protected WebDriver driver;
 
     @BeforeClass
     @Parameters({"urlAddress", "emailName", "emailPassword"})
     public void setUp(String urlAddress, String emailName, String emailPassword) {
 
-        String browserType = "CHROME";
+        String browser = "CHROME";
         String host = "localhost";
 
-        driver = new BrowserDriverManager().createInstance(browserType, LOCAL, host);
+        driver = new BrowserDriverManager().createInstance(browser, SELENIUM_GRID, host);
         driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
 
-        logger.info("+++++ AT Test was started for browser = " + browserType + " +++++");
+        logger.info("+++++ AT Test was started for browser = " + browser + " +++++");
 
         logInPage = new LogInPage(driver);
         mainPage = new MainPage(driver);
