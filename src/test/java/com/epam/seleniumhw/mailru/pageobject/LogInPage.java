@@ -12,6 +12,9 @@ public class LogInPage extends BasePage {
 
     @FindBy(xpath = "//div[@data-testid='logged-out-one-click']/button[text()='Войти']")
     private WebElement logInButton;
+
+    @FindBy(xpath = "//div[@data-testid='whiteline']//button[text()='Войти']")
+    private WebElement logInButton2;
     @FindBy(css = "input[name='username']")
     private WebElement userNameLogInField;
     @FindBy(xpath = "//button[@data-test-id='next-button']")
@@ -49,8 +52,8 @@ public class LogInPage extends BasePage {
     }
 
     public boolean validateLogOut() {
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(logInButton));
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(logInButton2));
 
-        return (logInButton.isDisplayed() || logInButton.isEnabled());
+        return (logInButton2.isDisplayed() || logInButton2.isEnabled());
     }
 }

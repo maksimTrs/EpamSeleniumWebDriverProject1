@@ -152,8 +152,12 @@ public class MainPage extends BasePage {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
 
         sendEmailButton.click();
-        webDriverWait.until(ExpectedConditions.visibilityOf(sendEmailPopUpTextMsg));
-        sendEmailCloseButton.click();
+        try {
+            webDriverWait.until(ExpectedConditions.visibilityOf(sendEmailPopUpTextMsg));
+            sendEmailCloseButton.click();
+        } catch (Exception e) {
+            driver.navigate().refresh();
+        }
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
     }
@@ -179,8 +183,7 @@ public class MainPage extends BasePage {
             }
 
         }
-
-        if (mailTypeEnum == SENT) {
+        else if (mailTypeEnum == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
             sentEmailPartition.click();
 
