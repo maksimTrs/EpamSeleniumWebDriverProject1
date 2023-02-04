@@ -20,8 +20,8 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - SE_NODE_MAX_INSTANCES=4
       - SE_NODE_MAX_SESSIONS=4
-  edge:
-    image: selenium/node-edge:4.7.2-20221219
+  firefox:
+    image: selenium/node-firefox:4.7.2-20221219
     shm_size: 1gb
     depends_on:
       - hub
@@ -40,14 +40,14 @@ services:
     environment:
       - DISPLAY_CONTAINER_NAME=chrome
       - FILE_NAME=chrome_video.mp4
-  edge_video:
+  firefox_video:
     image: selenium/video:ffmpeg-4.3.1-20221219
     volumes:
-      - E:\MAX\IT\Logging\java_for_testers\edge:/videos
+      - E:\MAX\IT\Logging\java_for_testers\firefox:/videos
     depends_on:
-      - edge
+      - firefox
     environment:
-      - DISPLAY_CONTAINER_NAME=edge
+      - DISPLAY_CONTAINER_NAME=firefox
       - FILE_NAME=firefox_video.mp4
 
 # docker compose up
