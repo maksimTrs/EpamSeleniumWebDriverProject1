@@ -12,7 +12,7 @@ public class BrowserDriverManager {
             host = System.getProperty("HUB_HOST");
         }
         if (System.getProperty("BROWSER") != null &&
-                System.getProperty("BROWSER").equalsIgnoreCase("EDGE")) {
+                System.getProperty("BROWSER").equalsIgnoreCase("FIREFOX")) {
             browser = System.getProperty("BROWSER");
         }
 
