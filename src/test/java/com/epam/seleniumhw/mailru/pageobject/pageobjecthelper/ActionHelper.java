@@ -26,7 +26,8 @@ public class ActionHelper {
                 .click()
                 .perform();
 
-        actions.moveToElement(webElement2)
+        actions
+                .moveToElement(webElement2)
                 .pause(Duration.ofSeconds(1))
                 .click()
                 .perform();

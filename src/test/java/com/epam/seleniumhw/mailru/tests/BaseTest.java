@@ -21,6 +21,8 @@ import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPas
 
 public abstract class BaseTest {
 
+    static public String browser;
+    static public String host;
     protected static Logger logger = Logger.getLogger(BaseTest.class);
     protected LogInPage logInPage;
     protected MainPage mainPage;
@@ -30,8 +32,8 @@ public abstract class BaseTest {
     @Parameters({"urlAddress", "emailName", "emailPassword"})
     public void setUp(String urlAddress, String emailName, String emailPassword) {
 
-        String browser = "CHROME";
-        String host = "localhost";
+        browser = "CHROME"; // FIREFOX  CHROME
+        host = "localhost";
 
         driver = new BrowserDriverManager().createInstance(browser, LOCAL, host);
         driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);

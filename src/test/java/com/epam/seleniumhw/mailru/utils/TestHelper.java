@@ -18,7 +18,6 @@ public class TestHelper {
                 .collect(Collectors.toList());
 
         System.out.println("List Filtering data = " + listOfUsers);
-
         return listOfUsers;
     }
 }
