@@ -97,7 +97,7 @@ public class MainPage extends BasePage {
     }
 
     public void createNewDraftEmail(String toWhomAddressEmail, String subjectEmail, String messageEmail) {
-        JavascriptExecutor jsExecutor = (JavascriptExecutor)driver;
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
         driver.navigate().refresh();
 
@@ -148,7 +148,6 @@ public class MainPage extends BasePage {
 
     public void sendDraftEmail(String toWhomUser) {
         openDraftEmail(toWhomUser);
-
         webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
 
         sendEmailButton.click();
@@ -182,8 +181,7 @@ public class MainPage extends BasePage {
                 System.out.println(webElement.getText());
             }
 
-        }
-        else if (mailTypeEnum == SENT) {
+        } else if (mailTypeEnum == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
             sentEmailPartition.click();
 
@@ -325,7 +323,6 @@ public class MainPage extends BasePage {
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(incomingEmailsPartition));
         incomingEmailsPartition.click();
-
 
         new ActionHelper().moveToElementAndClickOnElementHelper(driver, selectAllEmailsButton, deleteAllEmailsButton);
         clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);

@@ -39,7 +39,6 @@ public class LogInPage extends BasePage {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userNameLogInField));
         userNameLogInField.sendKeys(username);
 
-
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userPasswordLogInButton));
         userPasswordLogInButton.click();
 

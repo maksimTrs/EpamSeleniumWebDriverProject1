@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="mail-ru-runner" parallel="classes" thread-count="2">
+<suite name="mail-ru-runner">
     <!--<suite name="mail-ru-runner" parallel="classes" thread-count="4">-->
 
     <test name="test-email-box">
@@ -12,7 +12,8 @@
             <class name="com.epam.seleniumhw.mailru.tests.EmailCompareDraftFieldsTest"/>
             <class name="com.epam.seleniumhw.mailru.tests.EmailSendDraftEmailTest"/>
             <class name="com.epam.seleniumhw.mailru.tests.EmailLogOutTest"/>
-            <class name="com.epam.seleniumhw.mailru.tests.EmailCleanTestingDataTest"/>
+            <!-- !!! test only for chrome browser !!! -->
+            <class name="com.epam.seleniumhw.mailru.tests.EmailDeleteTestingDataTest"/>
         </classes>
     </test>
 </suite>

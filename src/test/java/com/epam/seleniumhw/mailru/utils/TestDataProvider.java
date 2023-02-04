@@ -12,7 +12,6 @@ public class TestDataProvider {
     private static String subjectEmailField = "TestSubject_" + getIntRandomValue();
     private static String messageEmailField = "TestMessage_" + getIntRandomValue();
 
-
     @DataProvider(name = "data-provider")
     public static Object[][] dataProviderForEmail() {
         return new Object[][]{
@@ -26,7 +25,6 @@ public class TestDataProvider {
                 {toWhomAddressEmailField + 99, subjectEmailField + 99, messageEmailField + 99}
         };
     }
-
 
     @DataProvider(name = "data-provider-compare-email")
     public static Object[][] dataProviderToCompareEmail() {
