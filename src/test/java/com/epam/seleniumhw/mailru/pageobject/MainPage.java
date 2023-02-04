@@ -28,7 +28,7 @@ public class MainPage extends BasePage {
     private WebElement mailExitButton;
     @FindBy(xpath = "//div[@data-testid='whiteline-account']/span[2]")
     private WebElement userMailAccountName;
-    @FindBy(xpath = "//a[@title='Написать письмо']")
+    @FindBy(xpath = "//a[@href='/compose/']")
     private WebElement createEmailButton;
     @FindBy(xpath = "//div[contains(@class, 'contactsContainer')]//input")
     private WebElement toWhomAddressEmailField;
@@ -321,9 +321,9 @@ public class MainPage extends BasePage {
         String text = getSpecifiedElementText(jscriptExecutor, deleteMessageText);
 
         assertThat(text.trim())
-                .as("Real value = " + text)
+                .as("Real value = " + text.trim())
                 .isEqualTo("Писем нет");
 
-        System.out.println("Result of deletion: " + text);
+        System.out.println("Result of deletion: " + text.trim());
     }
 }

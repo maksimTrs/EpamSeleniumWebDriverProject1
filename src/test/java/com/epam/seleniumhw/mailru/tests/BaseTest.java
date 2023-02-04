@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.LOCAL;
-import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.SELENIUM_GRID;
 import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
 
 
@@ -34,7 +33,7 @@ public abstract class BaseTest {
         String browser = "CHROME";
         String host = "localhost";
 
-        driver = new BrowserDriverManager().createInstance(browser, SELENIUM_GRID, host);
+        driver = new BrowserDriverManager().createInstance(browser, LOCAL, host);
         driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
 
         logger.info("+++++ AT Test was started for browser = " + browser + " +++++");
