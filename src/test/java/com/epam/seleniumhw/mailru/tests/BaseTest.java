@@ -9,12 +9,14 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.LOCAL;
 import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.SELENIUM_GRID;
 import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
 
@@ -31,14 +33,14 @@ public abstract class BaseTest {
     @BeforeClass
     @Parameters({"urlAddress", "emailName", "emailPassword"})
     public void setUp(String urlAddress, String emailName, String emailPassword) {
-
         browser = "CHROME"; // FIREFOX  CHROME
         host = "localhost";
-
         driver = new BrowserDriverManager().createInstance(browser, SELENIUM_GRID, host);
         driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
 
-        logger.info("+++++ AT Test was started for browser = " + browser + " +++++");
+        logger.info("+++++ AT Test was started for browser = "
+                + ((RemoteWebDriver) driver).getCapabilities().getBrowserName().toUpperCase()
+                + " +++++");
 
         logInPage = new LogInPage(driver);
         mainPage = new MainPage(driver);
