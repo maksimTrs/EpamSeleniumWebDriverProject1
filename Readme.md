@@ -31,7 +31,7 @@ value="{path_dirname}"
 
 **To start GRID4 with test report use commands:**
 
-Run docker-compose.yaml file ->  
+Run docker-compose.yaml file ->
 
 _`docker compose up`_
 
@@ -40,19 +40,19 @@ _`docker compose up`_
 - ~~E:\MAX\IT\Logging\java_for_testers\chrome~~:/videos
 - ~~E:\MAX\IT\Logging\java_for_testers\firefox~~:/videos
 
-Open in Browser URL -> 
+Open in Browser URL ->
 
 http://localhost:4444/ui/index.html#/
 
 To run tests locally, change code part in BaseTest.java:
 
-`driver = new BrowserDriverManager().createInstance(browser, SELENIUM_GRID, host);`   
+`driver = new BrowserDriverManager().createInstance(browser, SELENIUM_GRID, host);`
 
 to
 
 `driver = new BrowserDriverManager().createInstance(browser, LOCAL, host);`
 
-If you are using external IP address (!= localhost), add host your  IP address and run  it with the command:
+If you are using external IP address (!= localhost), add host your IP address and run it with the command:
 
 _`mvn clean test -DHUB_HOST=<external IP address>`_
 

@@ -15,7 +15,6 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.LOCAL;
 import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.SELENIUM_GRID;
 import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
 
