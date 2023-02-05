@@ -122,9 +122,12 @@ public class MainPage extends BasePage {
 
         emailSaveButton.click();
         emailClosePopUpButton.click();
+
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
     }
 
     public void openDraftEmail(String toWhomUser) {
+        //driver.navigate().refresh();
         webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
         draftEmailPartition.click();
 
@@ -147,10 +150,13 @@ public class MainPage extends BasePage {
 
 
     public void sendDraftEmail(String toWhomUser) {
+
         openDraftEmail(toWhomUser);
         webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
 
-        sendEmailButton.click();
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
+        clickOnSpecifiedElementHelper(jscriptExecutor, sendEmailButton);
+      //  sendEmailButton.click();
         try {
             webDriverWait.until(ExpectedConditions.visibilityOf(sendEmailPopUpTextMsg));
             sendEmailCloseButton.click();

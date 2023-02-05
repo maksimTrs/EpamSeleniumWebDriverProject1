@@ -5,7 +5,6 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.qameta.allure.testng.Tag;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
 import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.DRAFT;
@@ -27,17 +26,13 @@ public class EmailDeleteTestingDataTest extends BaseTest {
     @Test(testName = "email_delete_emails_test")
     public void deleteEmailsTest() {
 
-        if (driver instanceof ChromeDriver) {
-            mainPage.deleteEmails(DRAFT);
-            mainPage.validateEmptyEmailPartition(DRAFT);
+        mainPage.deleteEmails(DRAFT);
+        mainPage.validateEmptyEmailPartition(DRAFT);
 
-            mainPage.deleteEmails(SENT);
-            mainPage.validateEmptyEmailPartition(SENT);
+        mainPage.deleteEmails(SENT);
+        mainPage.validateEmptyEmailPartition(SENT);
 
-            mainPage.deleteEmailsFromIncomingPartition();
-            mainPage.validateEmptyEmailIncomingPartition();
-        } else {
-            logger.info(" ***** !!! Test <"  + getClass().getMethods()[0].getName() + "> Only for CHROME browser !!! *****");
-        }
+        mainPage.deleteEmailsFromIncomingPartition();
+        mainPage.validateEmptyEmailIncomingPartition();
     }
 }
