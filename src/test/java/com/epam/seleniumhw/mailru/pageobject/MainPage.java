@@ -124,7 +124,7 @@ public class MainPage extends BasePage {
             messageEmailField.sendKeys(messageEmail);
         } catch (Exception e) {
             addTextToEmailMessageField(jscriptExecutor, messageEmail);
-           // jscriptExecutor.executeScript(String.format("document.querySelector(\"div[role='textbox'] > div:first-of-type\").innerHTML='%s'", messageEmail));
+            // jscriptExecutor.executeScript(String.format("document.querySelector(\"div[role='textbox'] > div:first-of-type\").innerHTML='%s'", messageEmail));
         }
 
         emailSaveButton.click();
