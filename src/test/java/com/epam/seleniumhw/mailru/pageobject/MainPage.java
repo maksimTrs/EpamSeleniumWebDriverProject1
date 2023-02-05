@@ -103,7 +103,7 @@ public class MainPage extends BasePage {
     }
 
     public void createNewDraftEmail(String toWhomAddressEmail, String subjectEmail, String messageEmail) {
-        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
         driver.navigate().refresh();
 
@@ -123,7 +123,8 @@ public class MainPage extends BasePage {
         try {
             messageEmailField.sendKeys(messageEmail);
         } catch (Exception e) {
-            jsExecutor.executeScript(String.format("document.querySelector(\"div[role='textbox'] > div:first-of-type\").innerHTML='%s'", messageEmail));
+            addTextToEmailMessageField(jscriptExecutor, messageEmail);
+           // jscriptExecutor.executeScript(String.format("document.querySelector(\"div[role='textbox'] > div:first-of-type\").innerHTML='%s'", messageEmail));
         }
 
         emailSaveButton.click();
