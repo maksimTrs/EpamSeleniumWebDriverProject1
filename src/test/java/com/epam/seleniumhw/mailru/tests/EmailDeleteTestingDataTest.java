@@ -25,7 +25,7 @@ public class EmailDeleteTestingDataTest extends BaseTest {
     //@Ignore
     @Story("Delete emails from mailbox")
     @Test(testName = "email_delete_emails_test")
-    public void logOutTest() {
+    public void deleteEmailsTest() {
 
         if (driver instanceof ChromeDriver) {
             mainPage.deleteEmails(DRAFT);
@@ -37,7 +37,7 @@ public class EmailDeleteTestingDataTest extends BaseTest {
             mainPage.deleteEmailsFromIncomingPartition();
             mainPage.validateEmptyEmailIncomingPartition();
         } else {
-            logger.info(" ***** !!! Test Only for CHROME !!! *****");
+            logger.info(" ***** !!! Test <"  + getClass().getMethods()[0].getName() + "> Only for CHROME browser !!! *****");
         }
     }
 }
