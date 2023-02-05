@@ -21,4 +21,10 @@ public class JscriptExecutorHelper {
         return (String) jscriptExecutor
                 .executeScript(("return arguments[0].innerHTML;"), webElement);
     }
+
+
+    public static void addTextToEmailMessageField(JavascriptExecutor jscriptExecutor, String text) {
+        jscriptExecutor.
+                executeScript(String.format("document.querySelector(\"div[role='textbox'] > div:first-of-type\").innerHTML='%s'", text));
+    }
 }

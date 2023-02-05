@@ -1,7 +1,9 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
+import com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.ActionHelper;
 import com.epam.seleniumhw.mailru.utils.MailTypeEnum;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.JscriptExecutorHelper.*;
 import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.DRAFT;
 import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.SENT;
 import static com.epam.seleniumhw.mailru.utils.TestHelper.getStringEmailListFromWebElementList;
@@ -25,7 +28,7 @@ public class MainPage extends BasePage {
     private WebElement mailExitButton;
     @FindBy(xpath = "//div[@data-testid='whiteline-account']/span[2]")
     private WebElement userMailAccountName;
-    @FindBy(xpath = "//a[@title='Написать письмо']")
+    @FindBy(xpath = "//a[@href='/compose/']")
     private WebElement createEmailButton;
     @FindBy(xpath = "//div[contains(@class, 'contactsContainer')]//input")
     private WebElement toWhomAddressEmailField;
@@ -49,16 +52,43 @@ public class MainPage extends BasePage {
     private WebElement toWhomAddressEmailDraftField;
     @FindBy(xpath = "//div[@role='textbox']//div[contains(@id, 'BODY')]/div/div[1]")
     private WebElement bodyEmailDraftField;
-    @FindBy(css = "button[data-test-id='send']")
+    @FindBy(xpath = "//button[@data-test-id='send']")
     private WebElement sendEmailButton;
     @FindBy(xpath = "//div/a[text()='Письмо отправлено']")
     private WebElement sendEmailPopUpTextMsg;
     @FindBy(css = "span[title='Закрыть']")
     private WebElement sendEmailCloseButton;
-    @FindBy(xpath = "//a[contains(@href, '/sent')]//div[text()='Отправленные']")
+    @FindBy(xpath = "//a[contains(@href, '/sent')]")
     private WebElement sentEmailPartition;
     @FindBy(xpath = "//a[contains(@href, 'drafts')]/ancestor::div[@role='rowgroup']")
     private WebElement draftEmailListWaiter;
+
+    @FindBy(xpath = "//a[contains(@href, 'drafts')]//following::div[@data-qa-id='clear']//span[text()='Очистить содержимое']")
+    private WebElement clearDraftEmailsButton;
+
+    @FindBy(xpath = "//div[contains(@class, 'submit-button')]//span/div[text()='Очистить']")
+    private WebElement clearEmailsPartitionConfirmButton;
+
+    @FindBy(xpath = "//a[contains(@href, 'sent')]//following::div[@data-qa-id='clear']//span[text()='Очистить содержимое']")
+    private WebElement clearSentEmailsButton;
+
+    @FindBy(xpath = "//tbody//span[@data-title-shortcut='Ctrl+A'][@title='Выделить все']")
+    private WebElement selectAllEmailsButton;
+
+    @FindBy(xpath = "//tbody//span[@data-title-shortcut='Del']")
+    private WebElement deleteAllEmailsButton;
+
+    @FindBy(xpath = "//div/span[@class='octopus__title']")
+    private WebElement deleteMessageText;
+
+    @FindBy(xpath = "//a[contains(@href, '/inbox/?')]")
+    private WebElement incomingEmailsPartition;
+
+    @FindBy(xpath = "//div[@id='application']//div[@role='presentation']/.")
+    private WebElement feedbackPopUpCloseButton;
+
+    @FindBy(xpath = "//iframe[contains(@src, 'feedback')]")
+    private WebElement feedbackPopUp;
 
 
     private String toWhomElementPattern = "//a[contains(@href, 'drafts')]//div//span[@title='%s']";
@@ -73,22 +103,38 @@ public class MainPage extends BasePage {
     }
 
     public void createNewDraftEmail(String toWhomAddressEmail, String subjectEmail, String messageEmail) {
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
         driver.navigate().refresh();
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(createEmailButton));
-        createEmailButton.click();
+        try {
+            createEmailButton.click();
+        } catch (Exception e) {
+            driver.navigate().refresh();
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(createEmailButton));
+            createEmailButton.click();
+        }
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(toWhomAddressEmailField));
         toWhomAddressEmailField.sendKeys(toWhomAddressEmail);
         subjectEmailField.sendKeys(subjectEmail);
-        messageEmailField.sendKeys(messageEmail);
+
+        try {
+            messageEmailField.sendKeys(messageEmail);
+        } catch (Exception e) {
+            addTextToEmailMessageField(jscriptExecutor, messageEmail);
+           // jscriptExecutor.executeScript(String.format("document.querySelector(\"div[role='textbox'] > div:first-of-type\").innerHTML='%s'", messageEmail));
+        }
 
         emailSaveButton.click();
         emailClosePopUpButton.click();
+
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
     }
 
     public void openDraftEmail(String toWhomUser) {
+        //driver.navigate().refresh();
         webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
         draftEmailPartition.click();
 
@@ -98,7 +144,7 @@ public class MainPage extends BasePage {
         driver.findElement(By.xpath(String.format(toWhomElementPattern, toWhomUser))).click();
     }
 
-    public List<String> checkDraftEmailInternalFields() {
+    public List<String> getDraftEmailInternalFields() {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
 
         List<String> draftEmailInternalData = new ArrayList<>();
@@ -111,13 +157,29 @@ public class MainPage extends BasePage {
 
 
     public void sendDraftEmail(String toWhomUser) {
+
         openDraftEmail(toWhomUser);
 
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
+        try {
+            if (feedbackPopUp.isEnabled() || feedbackPopUp.isDisplayed()) {
+                driver.switchTo().frame((feedbackPopUp));
+                feedbackPopUpCloseButton.click();
+                driver.switchTo().defaultContent();
+            }
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
+            sendEmailButton.click();
+        } catch (Exception e) {
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
+            sendEmailButton.click();
+        }
 
-        sendEmailButton.click();
-        webDriverWait.until(ExpectedConditions.visibilityOf(sendEmailPopUpTextMsg));
-        sendEmailCloseButton.click();
+
+        try {
+            webDriverWait.until(ExpectedConditions.visibilityOf(sendEmailPopUpTextMsg));
+            sendEmailCloseButton.click();
+        } catch (Exception e) {
+            driver.navigate().refresh();
+        }
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
     }
@@ -142,9 +204,7 @@ public class MainPage extends BasePage {
                 System.out.println(webElement.getText());
             }
 
-        }
-
-        if (mailTypeEnum == SENT) {
+        } else if (mailTypeEnum == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
             sentEmailPartition.click();
 
@@ -194,7 +254,7 @@ public class MainPage extends BasePage {
     }
 
     public void validateDraftEmailFieldsData(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
-        List<String> draftEmailFieldsData = this.checkDraftEmailInternalFields();
+        List<String> draftEmailFieldsData = this.getDraftEmailInternalFields();
 
         System.out.println("List Filtering data = " + draftEmailFieldsData);
 
@@ -204,11 +264,104 @@ public class MainPage extends BasePage {
     }
 
     public void validateLogOut() {
-        boolean logoutStatus = this.doLogOut().checkLogOut();
+        boolean logoutStatus = this.doLogOut().validateLogOut();
 
         assertThat(logoutStatus)
                 .as("The user still doesn't log out!")
                 .isTrue();
     }
 
+
+    public void deleteEmails(MailTypeEnum mailTypeEnum) {
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
+        jscriptExecutor.executeScript("history.go(0)");
+
+        if (mailTypeEnum == DRAFT) {
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
+          /*  new Actions(driver)
+                    .moveToElement(draftEmailPartition)
+                    .pause(Duration.ofSeconds(1))
+                    .contextClick(draftEmailPartition)
+                    .pause(Duration.ofSeconds(2))
+                    .perform();*/
+            /* jscriptExecutor.executeScript("arguments[0].click();", clearDraftEmailsButton);
+            jscriptExecutor.executeScript("arguments[0].click();", clearEmailsPartitionConfirmButton);*/
+
+            new ActionHelper().moveToElementAndRightClickHelper(driver, draftEmailPartition);
+
+            clickOnSpecifiedElementHelper(jscriptExecutor, clearDraftEmailsButton);
+            clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);
+        } else if (mailTypeEnum == SENT) {
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
+      /*      new Actions(driver)
+                    .moveToElement(sentEmailPartition)
+                    .pause(Duration.ofSeconds(1))
+                    .contextClick(sentEmailPartition)
+                    .pause(Duration.ofSeconds(2))
+                    .perform();*/
+            /*  jscriptExecutor.executeScript("arguments[0].click();", clearSentEmailsButton);
+            jscriptExecutor.executeScript("arguments[0].click();", clearEmailsPartitionConfirmButton);*/
+
+            new ActionHelper().moveToElementAndRightClickHelper(driver, sentEmailPartition);
+
+            clickOnSpecifiedElementHelper(jscriptExecutor, clearSentEmailsButton);
+            clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);
+
+        }
+    }
+
+    public void validateEmptyEmailPartition(MailTypeEnum mailTypeEnum) {
+
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
+        jscriptExecutor.executeScript("history.go(0)");
+        String text = null;
+
+        if (mailTypeEnum == DRAFT) {
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
+            // text = (String) jscriptExecutor.executeScript("return arguments[0].getAttribute('data-title');", draftEmailPartition);
+            text = getSpecifiedElementAttributeText(jscriptExecutor, "title", draftEmailPartition);
+
+            assertThat(text)
+                    .as("Real value = " + text)
+                    .isEqualTo("Черновики, нет писем");
+
+            System.out.println("Result of deletion Draft Emails: " + text);
+        } else if (mailTypeEnum == SENT) {
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
+            //text = (String) jscriptExecutor.executeScript("return arguments[0].getAttribute('data-title');", sentEmailPartition);
+            text = getSpecifiedElementAttributeText(jscriptExecutor, "title", sentEmailPartition);
+
+            assertThat(text)
+                    .as("Real value = " + text)
+                    .isEqualTo("Отправленные, нет писем");
+
+            System.out.println("Result of deletion Sent Emails: " + text);
+        }
+    }
+
+
+    public void deleteEmailsFromIncomingPartition() {
+
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
+        driver.navigate().refresh();
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
+
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(incomingEmailsPartition));
+        incomingEmailsPartition.click();
+
+        new ActionHelper().moveToElementAndClickOnElementHelper(driver, selectAllEmailsButton, deleteAllEmailsButton);
+        clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);
+    }
+
+    public void validateEmptyEmailIncomingPartition() {
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
+        String text = getSpecifiedElementText(jscriptExecutor, deleteMessageText);
+
+        assertThat(text.trim())
+                .as("Real value = " + text.trim())
+                .isEqualTo("Писем нет");
+
+        System.out.println("Result of deletion Input Emails: " + text.trim());
+    }
 }
