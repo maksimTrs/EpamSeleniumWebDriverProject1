@@ -13,7 +13,7 @@ public class LogInPage extends BasePage {
     @FindBy(xpath = "//div[@data-testid='logged-out-one-click']/button[text()='Войти']")
     private WebElement logInButton;
 
-    @FindBy(xpath = "//div[@data-testid='whiteline']//button[text()='Войти']")
+    @FindBy(xpath = "//div[@data-testid='whiteline']//button[text()='Войти'] | //div[@data-testid='whiteline']//button[text()='Log in']")
     private WebElement logInButton2;
     @FindBy(css = "input[name='username']")
     private WebElement userNameLogInField;

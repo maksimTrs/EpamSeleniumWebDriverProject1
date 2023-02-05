@@ -84,6 +84,12 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//a[contains(@href, '/inbox/?')]")
     private WebElement incomingEmailsPartition;
 
+    @FindBy(xpath = "//div[@id='application']//div[@role='presentation']/.")
+    private WebElement feedbackPopUpCloseButton;
+
+    @FindBy(xpath = "//iframe[contains(@src, 'feedback')]")
+    private WebElement feedbackPopUp;
+
 
     private String toWhomElementPattern = "//a[contains(@href, 'drafts')]//div//span[@title='%s']";
 
@@ -152,14 +158,20 @@ public class MainPage extends BasePage {
     public void sendDraftEmail(String toWhomUser) {
 
         openDraftEmail(toWhomUser);
-        webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
 
-        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
         try {
+            if (feedbackPopUp.isEnabled() || feedbackPopUp.isDisplayed()) {
+                driver.switchTo().frame((feedbackPopUp));
+                feedbackPopUpCloseButton.click();
+                driver.switchTo().defaultContent();
+            }
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
             sendEmailButton.click();
         } catch (Exception e) {
-            clickOnSpecifiedElementHelper(jscriptExecutor, sendEmailButton);
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
+            sendEmailButton.click();
         }
+
 
         try {
             webDriverWait.until(ExpectedConditions.visibilityOf(sendEmailPopUpTextMsg));
@@ -312,6 +324,8 @@ public class MainPage extends BasePage {
             assertThat(text)
                     .as("Real value = " + text)
                     .isEqualTo("Черновики, нет писем");
+
+            System.out.println("Result of deletion Draft Emails: " + text);
         } else if (mailTypeEnum == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
             //text = (String) jscriptExecutor.executeScript("return arguments[0].getAttribute('data-title');", sentEmailPartition);
@@ -320,8 +334,9 @@ public class MainPage extends BasePage {
             assertThat(text)
                     .as("Real value = " + text)
                     .isEqualTo("Отправленные, нет писем");
+
+            System.out.println("Result of deletion Sent Emails: " + text);
         }
-        System.out.println("Result of deletion: " + text);
     }
 
 
@@ -346,6 +361,6 @@ public class MainPage extends BasePage {
                 .as("Real value = " + text.trim())
                 .isEqualTo("Писем нет");
 
-        System.out.println("Result of deletion: " + text.trim());
+        System.out.println("Result of deletion Input Emails: " + text.trim());
     }
 }
