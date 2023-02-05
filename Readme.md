@@ -12,6 +12,10 @@ mvn clean test -DBROWSER=firefox
 
 mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-runner.xml"
 
+**To start tests with emails deletion logic run maven command:**
+
+mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-delete-test-data-runner.xml"
+
 ============================================================
 
 **To start bonus task use command:**
