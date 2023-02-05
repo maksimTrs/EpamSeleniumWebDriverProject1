@@ -29,17 +29,17 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - SE_NODE_MAX_INSTANCES=4
       - SE_NODE_MAX_SESSIONS=4
-#  chrome2:
-#    image: selenium/node-chrome:4.7.2-20221219
-#    shm_size: 2gb
-#    depends_on:
-#      - hub
-#    environment:
-#      - SE_EVENT_BUS_HOST=hub
-#      - SE_EVENT_BUS_PUBLISH_PORT=4442
-#      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-#      - SE_NODE_MAX_INSTANCES=4
-#      - SE_NODE_MAX_SESSIONS=4
+  chrome2:
+    image: selenium/node-chrome:4.8.0-20230202
+    shm_size: 2gb
+    depends_on:
+      - hub
+    environment:
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_INSTANCES=2
+      - SE_NODE_MAX_SESSIONS=2
   chrome_video:
     image: selenium/video:ffmpeg-4.3.1-20221219
     volumes:
@@ -49,15 +49,15 @@ services:
     environment:
       - DISPLAY_CONTAINER_NAME=chrome
       - FILE_NAME=chrome_video.mp4
-#  chrome_video2:
-#    image: selenium/video:ffmpeg-4.3.1-20221219
-#    volumes:
-#      - E:\MAX\IT\Logging\java_for_testers\chrome:/videos
-#    depends_on:
-#      - chrome2
-#    environment:
-#      - DISPLAY_CONTAINER_NAME=chrome2
-#      - FILE_NAME=chrome2_video.mp4
+  chrome_video2:
+    image: selenium/video:ffmpeg-4.3.1-20230202
+    volumes:
+      - E:\MAX\IT\Logging\java_for_testers\chrome2:/videos
+    depends_on:
+      - chrome2
+    environment:
+      - DISPLAY_CONTAINER_NAME=chrome2
+      - FILE_NAME=chrome2_video.mp4
   firefox_video:
     image: selenium/video:ffmpeg-4.3.1-20221219
     volumes:
