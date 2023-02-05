@@ -52,7 +52,7 @@ public class MainPage extends BasePage {
     private WebElement toWhomAddressEmailDraftField;
     @FindBy(xpath = "//div[@role='textbox']//div[contains(@id, 'BODY')]/div/div[1]")
     private WebElement bodyEmailDraftField;
-    @FindBy(css = "button[data-test-id='send']")
+    @FindBy(xpath = "//button[@data-test-id='send']")
     private WebElement sendEmailButton;
     @FindBy(xpath = "//div/a[text()='Письмо отправлено']")
     private WebElement sendEmailPopUpTextMsg;
@@ -155,8 +155,12 @@ public class MainPage extends BasePage {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(subjectEmailField));
 
         JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
-        clickOnSpecifiedElementHelper(jscriptExecutor, sendEmailButton);
-      //  sendEmailButton.click();
+        try {
+            sendEmailButton.click();
+        } catch (Exception e) {
+            clickOnSpecifiedElementHelper(jscriptExecutor, sendEmailButton);
+        }
+
         try {
             webDriverWait.until(ExpectedConditions.visibilityOf(sendEmailPopUpTextMsg));
             sendEmailCloseButton.click();
