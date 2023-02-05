@@ -1,10 +1,10 @@
-**To start main tests run maven command:**
+**To start main tests with CHROME browser run maven command:**
 
 mvn clean test
 
-**To start main tests with Edge browser run maven command:**
+**To start main tests with FIREFOX browser run maven command:**
 
-mvn clean test -DBROWSER=edge
+mvn clean test -DBROWSER=firefox
 
 ============================================================
 
