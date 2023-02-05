@@ -279,35 +279,16 @@ public class MainPage extends BasePage {
 
         if (mailTypeEnum == DRAFT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
-          /*  new Actions(driver)
-                    .moveToElement(draftEmailPartition)
-                    .pause(Duration.ofSeconds(1))
-                    .contextClick(draftEmailPartition)
-                    .pause(Duration.ofSeconds(2))
-                    .perform();*/
-            /* jscriptExecutor.executeScript("arguments[0].click();", clearDraftEmailsButton);
-            jscriptExecutor.executeScript("arguments[0].click();", clearEmailsPartitionConfirmButton);*/
-
             new ActionHelper().moveToElementAndRightClickHelper(driver, draftEmailPartition);
 
             clickOnSpecifiedElementHelper(jscriptExecutor, clearDraftEmailsButton);
             clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);
         } else if (mailTypeEnum == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
-      /*      new Actions(driver)
-                    .moveToElement(sentEmailPartition)
-                    .pause(Duration.ofSeconds(1))
-                    .contextClick(sentEmailPartition)
-                    .pause(Duration.ofSeconds(2))
-                    .perform();*/
-            /*  jscriptExecutor.executeScript("arguments[0].click();", clearSentEmailsButton);
-            jscriptExecutor.executeScript("arguments[0].click();", clearEmailsPartitionConfirmButton);*/
-
             new ActionHelper().moveToElementAndRightClickHelper(driver, sentEmailPartition);
 
             clickOnSpecifiedElementHelper(jscriptExecutor, clearSentEmailsButton);
             clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);
-
         }
     }
 
