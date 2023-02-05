@@ -18,6 +18,4 @@ public class EmailLogOutTest extends BaseTest {
 
         mainPage.validateLogOut();
     }
-
-
 }
