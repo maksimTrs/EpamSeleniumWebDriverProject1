@@ -12,8 +12,6 @@
             <class name="com.epam.seleniumhw.mailru.tests.EmailCompareDraftFieldsTest"/>
             <class name="com.epam.seleniumhw.mailru.tests.EmailSendDraftEmailTest"/>
             <class name="com.epam.seleniumhw.mailru.tests.EmailLogOutTest"/>
-            <!-- !!! test only for chrome browser !!! -->
-            <class name="com.epam.seleniumhw.mailru.tests.EmailDeleteTestingDataTest"/>
         </classes>
     </test>
 </suite>
