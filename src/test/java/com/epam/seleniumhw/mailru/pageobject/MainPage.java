@@ -1,6 +1,6 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
-import com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.ActionHelper;
+import com.epam.seleniumhw.mailru.utils.ActionHelper;
 import com.epam.seleniumhw.mailru.utils.MailTypeEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.JscriptExecutorHelper.*;
+import static com.epam.seleniumhw.mailru.utils.JscriptExecutorHelper.*;
 import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.DRAFT;
 import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.SENT;
 import static com.epam.seleniumhw.mailru.utils.TestHelper.getStringEmailListFromWebElementList;
@@ -124,7 +124,7 @@ public class MainPage extends BasePage {
             messageEmailField.sendKeys(messageEmail);
         } catch (Exception e) {
             addTextToEmailMessageField(jscriptExecutor, messageEmail);
-           // jscriptExecutor.executeScript(String.format("document.querySelector(\"div[role='textbox'] > div:first-of-type\").innerHTML='%s'", messageEmail));
+            // jscriptExecutor.executeScript(String.format("document.querySelector(\"div[role='textbox'] > div:first-of-type\").innerHTML='%s'", messageEmail));
         }
 
         emailSaveButton.click();
@@ -279,16 +279,16 @@ public class MainPage extends BasePage {
 
         if (mailTypeEnum == DRAFT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
-            new ActionHelper().moveToElementAndRightClickHelper(driver, draftEmailPartition);
+            new ActionHelper().moveToElementAndRightClick(driver, draftEmailPartition);
 
-            clickOnSpecifiedElementHelper(jscriptExecutor, clearDraftEmailsButton);
-            clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);
+            clickOnSpecifiedElement(jscriptExecutor, clearDraftEmailsButton);
+            clickOnSpecifiedElement(jscriptExecutor, clearEmailsPartitionConfirmButton);
         } else if (mailTypeEnum == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
-            new ActionHelper().moveToElementAndRightClickHelper(driver, sentEmailPartition);
+            new ActionHelper().moveToElementAndRightClick(driver, sentEmailPartition);
 
-            clickOnSpecifiedElementHelper(jscriptExecutor, clearSentEmailsButton);
-            clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);
+            clickOnSpecifiedElement(jscriptExecutor, clearSentEmailsButton);
+            clickOnSpecifiedElement(jscriptExecutor, clearEmailsPartitionConfirmButton);
         }
     }
 
@@ -332,7 +332,7 @@ public class MainPage extends BasePage {
         incomingEmailsPartition.click();
 
         new ActionHelper().moveToElementAndClickOnElementHelper(driver, selectAllEmailsButton, deleteAllEmailsButton);
-        clickOnSpecifiedElementHelper(jscriptExecutor, clearEmailsPartitionConfirmButton);
+        clickOnSpecifiedElement(jscriptExecutor, clearEmailsPartitionConfirmButton);
     }
 
     public void validateEmptyEmailIncomingPartition() {

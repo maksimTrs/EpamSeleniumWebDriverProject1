@@ -1,4 +1,4 @@
-package com.epam.seleniumhw.mailru.pageobject.pageobjecthelper;
+package com.epam.seleniumhw.mailru.utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +8,7 @@ import java.time.Duration;
 
 public class ActionHelper {
 
-    public void moveToElementAndRightClickHelper(WebDriver driver, WebElement webElement) {
+    public void moveToElementAndRightClick(WebDriver driver, WebElement webElement) {
         new Actions(driver)
                 .moveToElement(webElement)
                 .pause(Duration.ofSeconds(1))
