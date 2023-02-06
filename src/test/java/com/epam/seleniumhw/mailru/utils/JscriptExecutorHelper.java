@@ -1,11 +1,11 @@
-package com.epam.seleniumhw.mailru.pageobject.pageobjecthelper;
+package com.epam.seleniumhw.mailru.utils;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 public class JscriptExecutorHelper {
 
-    public static void clickOnSpecifiedElementHelper(JavascriptExecutor jscriptExecutor, WebElement webElement) {
+    public static void clickOnSpecifiedElement(JavascriptExecutor jscriptExecutor, WebElement webElement) {
         jscriptExecutor
                 .executeScript("arguments[0].click();", webElement);
     }
