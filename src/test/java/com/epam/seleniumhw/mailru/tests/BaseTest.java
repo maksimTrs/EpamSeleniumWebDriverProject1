@@ -32,13 +32,13 @@ public abstract class BaseTest {
     @Parameters({"urlAddress", "emailName", "emailPassword"})
     public void setUp(String urlAddress, String emailName, String emailPassword) {
 
-
         driver = new DriverFactory().createInstance(LOCAL, HOST);
         driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
 
-        logger.info("+++++ AT Test was started for browser = "
+        logger.info("|||+++++||| AT Test was started for browser: <"
                 + ((RemoteWebDriver) driver).getCapabilities().getBrowserName().toUpperCase()
-                + " +++++");
+                + "> and browser version: " + ((RemoteWebDriver) driver).getCapabilities().getVersion()
+                + " |||+++++|||");
 
         logInPage = new LogInPage(driver);
         mainPage = new MainPage(driver);
