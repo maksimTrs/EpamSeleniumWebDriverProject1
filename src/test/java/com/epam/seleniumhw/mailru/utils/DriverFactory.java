@@ -9,29 +9,33 @@ import org.openqa.selenium.WebDriver;
 
 public class DriverFactory {
 
+    private WebDriver driver;
+
     public WebDriver createInstance(BrowserType browserType, String host) {
 
-        if (System.getProperty("HUB_HOST") != null && (!System.getProperty("HUB_HOST").isEmpty())) {
-            host = System.getProperty("HUB_HOST");
-        }
-        String path = "http://" + host + ":4444/wd/hub";
+        if (null == driver) {
+            if (System.getProperty("HUB_HOST") != null && (!System.getProperty("HUB_HOST").isEmpty())) {
+                host = System.getProperty("HUB_HOST");
+            }
+            String path = "http://" + host + ":4444/wd/hub";
 
-        DriverManagerType driverManagerType;
-        if (System.getProperty("BROWSER") != null &&
-                System.getProperty("BROWSER").equalsIgnoreCase("FIREFOX")) {
-            driverManagerType = DriverManagerType.valueOf(BrowserFactory.FIREFOX.getBrowserType());
-        } else {
-            driverManagerType = DriverManagerType.valueOf(BrowserFactory.CHROME.getBrowserType());
-        }
+            DriverManagerType driverManagerType;
+            if (System.getProperty("BROWSER") != null &&
+                    System.getProperty("BROWSER").equalsIgnoreCase("FIREFOX")) {
+                driverManagerType = DriverManagerType.valueOf(BrowserFactory.FIREFOX.getBrowserType());
+            } else {
+                driverManagerType = DriverManagerType.valueOf(BrowserFactory.CHROME.getBrowserType());
+            }
 
-        WebDriver driver;
-        switch (browserType) {
-            case LOCAL -> driver = WebDriverManager.getInstance(driverManagerType).create();
-            case SELENIUM_GRID -> driver = WebDriverManager.getInstance(driverManagerType).remoteAddress(path).create();
-            default -> throw new WebDriverManagerException("Invalid driver manager type");
-        }
-        driver.manage().window().maximize();
+            switch (browserType) {
+                case LOCAL -> driver = WebDriverManager.getInstance(driverManagerType).create();
+                case SELENIUM_GRID ->
+                        driver = WebDriverManager.getInstance(driverManagerType).remoteAddress(path).create();
+                default -> throw new WebDriverManagerException("Invalid driver manager type");
 
+            }
+            driver.manage().window().maximize();
+        }
         return driver;
     }
 
