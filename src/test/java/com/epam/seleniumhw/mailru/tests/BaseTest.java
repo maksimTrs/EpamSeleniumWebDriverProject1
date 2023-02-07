@@ -3,7 +3,7 @@ package com.epam.seleniumhw.mailru.tests;
 
 import com.epam.seleniumhw.mailru.pageobject.LogInPage;
 import com.epam.seleniumhw.mailru.pageobject.MainPage;
-import com.epam.seleniumhw.mailru.utils.BrowserDriverManager;
+import com.epam.seleniumhw.mailru.utils.DriverFactory;
 import io.qameta.allure.Attachment;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
@@ -16,15 +16,13 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.LOCAL;
-import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.SELENIUM_GRID;
+import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserType.LOCAL;
 import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
 
 
 public abstract class BaseTest {
 
-    static public String browser;
-    static public String host;
+    static public final String HOST = "localhost";
     protected static Logger logger = Logger.getLogger(BaseTest.class);
     protected LogInPage logInPage;
     protected MainPage mainPage;
@@ -33,9 +31,9 @@ public abstract class BaseTest {
     @BeforeClass
     @Parameters({"urlAddress", "emailName", "emailPassword"})
     public void setUp(String urlAddress, String emailName, String emailPassword) {
-        browser = "CHROME"; // FIREFOX  CHROME
-        host = "localhost";
-        driver = new BrowserDriverManager().createInstance(browser, SELENIUM_GRID, host);
+
+
+        driver = new DriverFactory().createInstance(LOCAL, HOST);
         driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
 
         logger.info("+++++ AT Test was started for browser = "
