@@ -23,7 +23,7 @@ import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPas
 public abstract class BaseTest {
 
     static public final String HOST = "localhost";
-    protected static Logger logger = Logger.getLogger(BaseTest.class);
+    public static Logger logger = Logger.getLogger(BaseTest.class);
     protected LogInPage logInPage;
     protected MainPage mainPage;
     protected WebDriver driver;

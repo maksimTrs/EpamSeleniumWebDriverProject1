@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.epam.seleniumhw.mailru.tests.BaseTest.logger;
 import static com.epam.seleniumhw.mailru.utils.JscriptExecutorHelper.*;
 import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.DRAFT;
 import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.SENT;
@@ -198,12 +199,10 @@ public class MainPage extends BasePage {
             for (WebElement element : draftEmailList) {
                 textValuesOfEmail = element.findElements(By.xpath(toWhomElementDraftList));
             }
-
-            System.out.println("Aggregated Email Addresses:");
+            logger.debug("Aggregated <DRAFT> Email Addresses:");
             for (WebElement webElement : textValuesOfEmail) {
                 System.out.println(webElement.getText());
             }
-
         } else if (mailTypeEnum == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
             sentEmailPartition.click();
@@ -214,12 +213,10 @@ public class MainPage extends BasePage {
             for (WebElement element : sentEmailList) {
                 textValuesOfEmail = element.findElements(By.xpath(toWhomElementSentList));
             }
-
-            System.out.println("Aggregated Email Addresses:");
+            logger.debug("Aggregated <SENT> Email Addresses:");
             for (WebElement webElement : textValuesOfEmail) {
                 System.out.println(webElement.getText());
             }
-
         }
 
         return textValuesOfEmail;
@@ -256,7 +253,7 @@ public class MainPage extends BasePage {
     public void validateDraftEmailFieldsData(String toWhomAddressEmailField, String subjectEmailField, String messageEmailField) {
         List<String> draftEmailFieldsData = this.getDraftEmailInternalFields();
 
-        System.out.println("List Filtering data = " + draftEmailFieldsData);
+        logger.debug("List of the filtering Draft Emails = " + draftEmailFieldsData);
 
         assertThat(draftEmailFieldsData).as("Wrong mapping data!")
                 .isNotEmpty()
@@ -307,7 +304,7 @@ public class MainPage extends BasePage {
                     .as("Real value = " + text)
                     .isEqualTo("Черновики, нет писем");
 
-            System.out.println("Result of deletion Draft Emails: " + text);
+            logger.debug("Result of deletion Draft Emails: " + text);
         } else if (mailTypeEnum == SENT) {
             webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
             //text = (String) jscriptExecutor.executeScript("return arguments[0].getAttribute('data-title');", sentEmailPartition);
@@ -317,7 +314,7 @@ public class MainPage extends BasePage {
                     .as("Real value = " + text)
                     .isEqualTo("Отправленные, нет писем");
 
-            System.out.println("Result of deletion Sent Emails: " + text);
+            logger.debug("Result of deletion Sent Emails: " + text);
         }
     }
 
@@ -343,6 +340,6 @@ public class MainPage extends BasePage {
                 .as("Real value = " + text.trim())
                 .isEqualTo("Писем нет");
 
-        System.out.println("Result of deletion Input Emails: " + text.trim());
+        logger.debug("Result of deletion Input Emails: " + text.trim());
     }
 }
