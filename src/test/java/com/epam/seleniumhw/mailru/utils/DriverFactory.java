@@ -7,13 +7,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 
+
+/**
+ * @see <a href="https://testomat.io/blog/singleton-design-pattern-how-to-use-it-in-test-automation/">Singleton pattern</a>
+ */
+
 public class DriverFactory {
 
-    private WebDriver driver;
+    private DriverFactory() {}
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-    public WebDriver createInstance(BrowserType browserType, String host) {
+    public static WebDriver createInstance(BrowserType browserType, String host) {
 
-        if (null == driver) {
+        if (driver.get() == null) {
             if (System.getProperty("HUB_HOST") != null && (!System.getProperty("HUB_HOST").isEmpty())) {
                 host = System.getProperty("HUB_HOST");
             }
@@ -28,15 +34,20 @@ public class DriverFactory {
             }
 
             switch (browserType) {
-                case LOCAL -> driver = WebDriverManager.getInstance(driverManagerType).create();
+                case LOCAL -> driver.set(WebDriverManager.getInstance(driverManagerType).create());
                 case SELENIUM_GRID ->
-                        driver = WebDriverManager.getInstance(driverManagerType).remoteAddress(path).create();
+                        driver.set(WebDriverManager.getInstance(driverManagerType).remoteAddress(path).create());
                 default -> throw new WebDriverManagerException("Invalid driver manager type");
 
             }
-            driver.manage().window().maximize();
+            driver.get().manage().window().maximize();
         }
-        return driver;
+        return driver.get();
+    }
+
+    public static void closeDriver() {
+        driver.get().quit();
+        driver.remove();
     }
 
     public enum BrowserType {

@@ -32,7 +32,7 @@ public abstract class BaseTest {
     @Parameters({"urlAddress", "emailName", "emailPassword"})
     public void setUp(String urlAddress, String emailName, String emailPassword) {
 
-        driver = new DriverFactory().createInstance(LOCAL, HOST);
+        driver = DriverFactory.createInstance(LOCAL, HOST);
         driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
 
         logger.info("|||+++++||| AT Test was started for browser: <"
@@ -49,7 +49,7 @@ public abstract class BaseTest {
     public void tearDown() {
         logInPage = null;
         mainPage = null;
-        driver.quit();
+        DriverFactory.closeDriver();
     }
 
     @BeforeMethod
