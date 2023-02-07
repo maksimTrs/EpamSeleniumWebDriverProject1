@@ -22,7 +22,6 @@ import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPas
 
 public abstract class BaseTest {
 
-    static public final String HOST = "localhost";
     public static Logger logger = Logger.getLogger(BaseTest.class);
     protected LogInPage logInPage;
     protected MainPage mainPage;
@@ -32,12 +31,12 @@ public abstract class BaseTest {
     @Parameters({"urlAddress", "emailName", "emailPassword"})
     public void setUp(String urlAddress, String emailName, String emailPassword) {
 
-        driver = DriverFactory.createInstance(LOCAL, HOST);
+        driver = DriverFactory.createInstance(LOCAL);
         driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
 
-        logger.info("|||+++++||| AT Test was started for browser: <"
+        logger.info("|||+++++||| AT Test was started for Browser: <"
                 + ((RemoteWebDriver) driver).getCapabilities().getBrowserName().toUpperCase()
-                + "> and browser version: " + ((RemoteWebDriver) driver).getCapabilities().getVersion()
+                + "> and Browser version: " + ((RemoteWebDriver) driver).getCapabilities().getVersion()
                 + " |||+++++|||");
 
         logInPage = new LogInPage(driver);

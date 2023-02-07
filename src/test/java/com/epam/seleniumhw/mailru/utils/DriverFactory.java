@@ -6,6 +6,7 @@ import io.github.bonigarcia.wdm.config.WebDriverManagerException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.BrowserType;
 
 
 /**
@@ -16,9 +17,9 @@ public class DriverFactory {
 
     private DriverFactory() {}
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static String host =  "localhost";
 
-    public static WebDriver createInstance(BrowserType browserType, String host) {
-
+    public static WebDriver createInstance(BrowserType browserType) {
         if (driver.get() == null) {
             if (System.getProperty("HUB_HOST") != null && (!System.getProperty("HUB_HOST").isEmpty())) {
                 host = System.getProperty("HUB_HOST");
@@ -37,8 +38,7 @@ public class DriverFactory {
                 case LOCAL -> driver.set(WebDriverManager.getInstance(driverManagerType).create());
                 case SELENIUM_GRID ->
                         driver.set(WebDriverManager.getInstance(driverManagerType).remoteAddress(path).create());
-                default -> throw new WebDriverManagerException("Invalid driver manager type");
-
+                default -> throw new WebDriverManagerException("<Invalid browserType>");
             }
             driver.get().manage().window().maximize();
         }
