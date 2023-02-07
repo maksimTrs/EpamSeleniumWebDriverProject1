@@ -4,6 +4,7 @@ package com.epam.seleniumhw.mailru.tests;
 import com.epam.seleniumhw.mailru.pageobject.LogInPage;
 import com.epam.seleniumhw.mailru.pageobject.MainPage;
 import com.epam.seleniumhw.mailru.utils.DriverFactory;
+import com.epam.seleniumhw.mailru.utils.TestListener;
 import io.qameta.allure.Attachment;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
@@ -20,7 +21,8 @@ import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserType.LOCAL;
 import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
 
 
-public abstract class BaseTest {
+@Listeners({TestListener.class})  // Change the Browser type:  LOCAL <-> SELENIUM_GRID
+public class BaseTest {
 
     public static Logger logger = Logger.getLogger(BaseTest.class);
     protected LogInPage logInPage;
@@ -32,7 +34,7 @@ public abstract class BaseTest {
     public void setUp(String urlAddress, String emailName, String emailPassword) {
 
         driver = DriverFactory.createInstance(LOCAL);
-        driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         logger.info("|||+++++||| AT Test was started for Browser: <"
                 + ((RemoteWebDriver) driver).getCapabilities().getBrowserName().toUpperCase()
