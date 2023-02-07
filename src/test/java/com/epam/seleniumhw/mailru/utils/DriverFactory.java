@@ -11,7 +11,6 @@ public class DriverFactory {
 
     public WebDriver createInstance(BrowserType browserType, String host) {
 
-
         if (System.getProperty("HUB_HOST") != null && (!System.getProperty("HUB_HOST").isEmpty())) {
             host = System.getProperty("HUB_HOST");
         }
@@ -37,7 +36,8 @@ public class DriverFactory {
     }
 
     public enum BrowserType {
-        LOCAL, SELENIUM_GRID
+        LOCAL,
+        SELENIUM_GRID
     }
 
     @Getter
