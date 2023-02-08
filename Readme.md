@@ -1,6 +1,6 @@
-**To start main tests with CHROME browser run maven command:**
+**To start main tests with CHROME browser and qa.properties (by default), run maven command:**
 
-_` mvn -DsuiteXmlFile="src/test/resources/mail-ru-regression.xml" -DENVIRONMENT=qa clean test`_
+_`mvn -DsuiteXmlFile="src/test/resources/mail-ru-regression.xml" clean test`_
 
 **To start main tests with FIREFOX browser run maven command:**
 
