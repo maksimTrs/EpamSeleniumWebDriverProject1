@@ -1,26 +1,26 @@
 **To start main tests with CHROME browser run maven command:**
 
-_` mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-regression.xml" -DENVIRONMENT=qa`_
+_` mvn -DsuiteXmlFile="src/test/resources/mail-ru-regression.xml" -DENVIRONMENT=qa clean test`_
 
 **To start main tests with FIREFOX browser run maven command:**
 
-_`mvn clean test -DBROWSER=firefox -DsuiteXmlFile="src/test/resources/mail-ru-regression.xml" -DENVIRONMENT=qa`_
+_`mvn -DBROWSER=firefox -DsuiteXmlFile="src/test/resources/mail-ru-regression.xml" -DENVIRONMENT=qa clean test`_
 
 ============================================================
 
 **To start smoke main tests:**
 
-_`mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-smoke.xml" -DENVIRONMENT=qa`_
+_`mvn -DsuiteXmlFile="src/test/resources/mail-ru-smoke.xml" -DENVIRONMENT=qa clean test`_
 
 **To start tests with emails deletion logic run maven command:**
 
-_`mvn clean test -DBROWSER=chrome -DsuiteXmlFile="src/test/resources/mail-ru-delete-test-data-runner.xml" -DENVIRONMENT=qa`_
+_`mvn -DBROWSER=chrome -DsuiteXmlFile="src/test/resources/mail-ru-delete-test-data-runner.xml" -DENVIRONMENT=qa clean test`_
 
 ============================================================
 
 **To start bonus task use command:**
 
-_`mvn clean test -DsuiteXmlFile="src/test/resources/google-bonus-task.xml"`_
+_`mvn -DsuiteXmlFile="src/test/resources/google-bonus-task.xml" clean test`_
 
 #####
 
@@ -54,7 +54,7 @@ to
 
 If you are using external IP address (!= localhost), add host your IP address and run it with the command:
 
-_`mvn clean test -DHUB_HOST=<external IP address>`_
+_`mvn -DHUB_HOST=<external IP address> ...`_
 
 ============================================================
 
