@@ -16,6 +16,7 @@ public class DriverFactory {
 
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     private static String host = "localhost";
+
     private DriverFactory() {
     }
 
