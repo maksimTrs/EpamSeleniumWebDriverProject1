@@ -1,11 +1,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="mail-ru-runner">
-    <!--<suite name="mail-ru-runner" parallel="classes" thread-count="4">-->
+<suite name="mail-ru-regression" parallel="classes" thread-count="2">
 
-    <test name="test-email-box">
+    <test name="test-email-box-regression">
         <parameter name="urlAddress" value="https://mail.ru/"/>
-        <parameter name="emailName" value="hokagemax777@mail.ru"/>
-        <parameter name="emailPassword" value="aG9rYWdlbWF4MDIwNTkw"/>
+        <!--  <parameter name="emailName" value="hokagemax777@mail.ru"/>
+          <parameter name="emailPassword" value="aG9rYWdlbWF4MDIwNTkw"/>-->
         <classes>
             <class name="com.epam.seleniumhw.mailru.tests.EmailLoginTest"/>
             <class name="com.epam.seleniumhw.mailru.tests.EmailDraftCreationTest"/>

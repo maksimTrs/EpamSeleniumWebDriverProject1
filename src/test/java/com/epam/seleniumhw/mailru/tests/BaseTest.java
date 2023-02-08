@@ -1,9 +1,12 @@
 package com.epam.seleniumhw.mailru.tests;
 
 
+import com.epam.seleniumhw.mailru.model.User;
 import com.epam.seleniumhw.mailru.pageobject.LogInPage;
 import com.epam.seleniumhw.mailru.pageobject.MainPage;
-import com.epam.seleniumhw.mailru.utils.BrowserDriverManager;
+import com.epam.seleniumhw.mailru.service.UserCreator;
+import com.epam.seleniumhw.mailru.utils.DriverFactory;
+import com.epam.seleniumhw.mailru.utils.TestListener;
 import io.qameta.allure.Attachment;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
@@ -16,42 +19,41 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.LOCAL;
-import static com.epam.seleniumhw.mailru.utils.BrowserDriverManager.BrowserType.SELENIUM_GRID;
-import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
+import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserType.LOCAL;
 
 
-public abstract class BaseTest {
+@Listeners({TestListener.class})  // Change the Browser type:  LOCAL <-> SELENIUM_GRID
+public class BaseTest {
 
-    static public String browser;
-    static public String host;
-    protected static Logger logger = Logger.getLogger(BaseTest.class);
+    public static Logger logger = Logger.getLogger(BaseTest.class);
+    public User testUser;
     protected LogInPage logInPage;
     protected MainPage mainPage;
     protected WebDriver driver;
 
     @BeforeClass
-    @Parameters({"urlAddress", "emailName", "emailPassword"})
-    public void setUp(String urlAddress, String emailName, String emailPassword) {
-        browser = "CHROME"; // FIREFOX  CHROME
-        host = "localhost";
-        driver = new BrowserDriverManager().createInstance(browser, SELENIUM_GRID, host);
-        driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
+    @Parameters({"urlAddress"})
+    public void setUp(String urlAddress) {
 
-        logger.info("+++++ AT Test was started for browser = "
+        driver = DriverFactory.createInstance(LOCAL);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        logger.info("|||+++++||| AT Test was started for Browser: <"
                 + ((RemoteWebDriver) driver).getCapabilities().getBrowserName().toUpperCase()
-                + " +++++");
+                + "> and Browser version: " + ((RemoteWebDriver) driver).getCapabilities().getVersion()
+                + " |||+++++|||");
 
         logInPage = new LogInPage(driver);
         mainPage = new MainPage(driver);
-        logInPage.doLogIn(urlAddress, emailName, handlingPassword(emailPassword));
+        testUser = UserCreator.withCredentialsFromProperty();
+        logInPage.doLogIn(urlAddress, testUser);
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDown() {
         logInPage = null;
         mainPage = null;
-        driver.quit();
+        DriverFactory.closeDriver();
     }
 
     @BeforeMethod

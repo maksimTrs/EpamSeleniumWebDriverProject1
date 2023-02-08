@@ -1,10 +1,13 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
+import com.epam.seleniumhw.mailru.model.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
 
 public class LogInPage extends BasePage {
 
@@ -29,7 +32,7 @@ public class LogInPage extends BasePage {
     }
 
 
-    public void doLogIn(String url, String username, String password) {
+    public void doLogIn(String url, User user) {
         driver.get(url);
         webDriverWait.until(ExpectedConditions.elementToBeClickable(logInButton));
         logInButton.click();
@@ -37,13 +40,13 @@ public class LogInPage extends BasePage {
         driver.switchTo().frame(driver.findElement(By.xpath(logInIFrame)));
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userNameLogInField));
-        userNameLogInField.sendKeys(username);
+        userNameLogInField.sendKeys(user.getUsername());
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userPasswordLogInButton));
         userPasswordLogInButton.click();
 
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userPasswordLogInField));
-        userPasswordLogInField.sendKeys(password);
+        userPasswordLogInField.sendKeys(handlingPassword(user.getPassword()));
 
         logInSubmitButton.click();
 

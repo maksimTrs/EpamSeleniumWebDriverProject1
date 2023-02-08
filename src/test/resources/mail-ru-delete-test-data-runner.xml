@@ -1,11 +1,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="mail-ru-delete-test-data-runner">
-    <!--<suite name="mail-ru-runner" parallel="classes" thread-count="4">-->
 
     <test name="test-delete-emails">
         <parameter name="urlAddress" value="https://mail.ru/"/>
-        <parameter name="emailName" value="hokagemax777@mail.ru"/>
-        <parameter name="emailPassword" value="aG9rYWdlbWF4MDIwNTkw"/>
         <classes>
             <!-- !!! test only for chrome browser !!! -->
             <class name="com.epam.seleniumhw.mailru.tests.EmailDeleteTestingDataTest"/>
