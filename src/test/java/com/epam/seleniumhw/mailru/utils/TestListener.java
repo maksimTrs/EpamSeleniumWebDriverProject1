@@ -15,11 +15,12 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static com.epam.seleniumhw.mailru.tests.BaseTest.logger;
 import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserType.LOCAL;
 
 
 public class TestListener implements ITestListener {
-    private Logger log = LogManager.getRootLogger();
+   // private Logger log = LogManager.getRootLogger();
 
     public void onTestStart(ITestResult iTestResult) {
 
@@ -31,6 +32,7 @@ public class TestListener implements ITestListener {
 
     public void onTestFailure(ITestResult iTestResult) {
         saveScreenshot();
+        logger.error("<<<Test failed. Screenshot with issue was saved>>>");
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
@@ -50,8 +52,7 @@ public class TestListener implements ITestListener {
     }
 
     private void saveScreenshot() {
-        File screenCapture = ((TakesScreenshot) DriverFactory
-                .createInstance(LOCAL))
+        File screenCapture = ((TakesScreenshot) DriverFactory.createInstance(LOCAL))
                 .getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(screenCapture, new File(
@@ -59,7 +60,7 @@ public class TestListener implements ITestListener {
                             + getCurrentTimeAsString() +
                             ".png"));
         } catch (IOException e) {
-            log.error("Failed to save screenshot: " + e.getLocalizedMessage());
+            logger.error("Failed to save screenshot: " + e.getLocalizedMessage());
         }
     }
 

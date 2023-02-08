@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="mail-ru-smoke" parallel="classes" thread-count="2">
+
+    <test name="test-email-box-smoke">
+        <parameter name="urlAddress" value="https://mail.ru/"/>
+        <classes>
+            <class name="com.epam.seleniumhw.mailru.tests.EmailLoginTest"/>
+            <class name="com.epam.seleniumhw.mailru.tests.EmailLogOutTest"/>
+        </classes>
+    </test>
+</suite>

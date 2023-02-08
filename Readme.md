@@ -1,10 +1,10 @@
 **To start main tests with CHROME browser run maven command:**
 
-_`mvn clean test`_
+_`mvn  clean test -DsuiteXmlFile="src/test/resources/mail-ru-runner.xml" -DENVIRONMENT=qa`_
 
 **To start main tests with FIREFOX browser run maven command:**
 
-_`mvn clean test -DBROWSER=firefox`_
+_`mvn clean test -DBROWSER=firefox -DsuiteXmlFile="src/test/resources/mail-ru-runner.xml" -DENVIRONMENT=qa`_
 
 ============================================================
 

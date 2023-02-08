@@ -1,8 +1,10 @@
 package com.epam.seleniumhw.mailru.tests;
 
 
+import com.epam.seleniumhw.mailru.model.User;
 import com.epam.seleniumhw.mailru.pageobject.LogInPage;
 import com.epam.seleniumhw.mailru.pageobject.MainPage;
+import com.epam.seleniumhw.mailru.service.UserCreator;
 import com.epam.seleniumhw.mailru.utils.DriverFactory;
 import com.epam.seleniumhw.mailru.utils.TestListener;
 import io.qameta.allure.Attachment;
@@ -28,10 +30,11 @@ public class BaseTest {
     protected LogInPage logInPage;
     protected MainPage mainPage;
     protected WebDriver driver;
+    public User testUser;
 
     @BeforeClass
-    @Parameters({"urlAddress", "emailName", "emailPassword"})
-    public void setUp(String urlAddress, String emailName, String emailPassword) {
+    @Parameters({"urlAddress"})
+    public void setUp(String urlAddress) {
 
         driver = DriverFactory.createInstance(LOCAL);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -43,7 +46,8 @@ public class BaseTest {
 
         logInPage = new LogInPage(driver);
         mainPage = new MainPage(driver);
-        logInPage.doLogIn(urlAddress, emailName, handlingPassword(emailPassword));
+        testUser = UserCreator.withCredentialsFromProperty();
+        logInPage.doLogIn(urlAddress, testUser);
     }
 
     @AfterClass(alwaysRun = true)
