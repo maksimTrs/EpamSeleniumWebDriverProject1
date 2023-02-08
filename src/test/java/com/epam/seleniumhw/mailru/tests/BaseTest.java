@@ -20,17 +20,16 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserType.LOCAL;
-import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
 
 
 @Listeners({TestListener.class})  // Change the Browser type:  LOCAL <-> SELENIUM_GRID
 public class BaseTest {
 
     public static Logger logger = Logger.getLogger(BaseTest.class);
+    public User testUser;
     protected LogInPage logInPage;
     protected MainPage mainPage;
     protected WebDriver driver;
-    public User testUser;
 
     @BeforeClass
     @Parameters({"urlAddress"})

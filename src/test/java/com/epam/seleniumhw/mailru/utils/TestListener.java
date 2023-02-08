@@ -2,8 +2,6 @@ package com.epam.seleniumhw.mailru.utils;
 
 
 import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
@@ -20,7 +18,7 @@ import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserType.LOCAL;
 
 
 public class TestListener implements ITestListener {
-   // private Logger log = LogManager.getRootLogger();
+    // private Logger log = LogManager.getRootLogger();
 
     public void onTestStart(ITestResult iTestResult) {
 

@@ -17,8 +17,8 @@ public class TestDataProvider {
     private static String messageEmailField2 = "TestMessage_" + (getIntRandomValue() + 33);
 
     private static String toWhomAddressEmailField3 = "TestUser_" + (getIntRandomValue() + 99) + "@test." + getRandomFirstDomainLvl();
-    private static String subjectEmailField3 = "TestSubject_" +  (getIntRandomValue() + 99);
-    private static String messageEmailField3 = "TestMessage_" +  (getIntRandomValue() + 99);
+    private static String subjectEmailField3 = "TestSubject_" + (getIntRandomValue() + 99);
+    private static String messageEmailField3 = "TestMessage_" + (getIntRandomValue() + 99);
 
     @DataProvider(name = "data-provider")
     public static Object[][] dataProviderForEmail() {

@@ -6,7 +6,6 @@ import io.github.bonigarcia.wdm.config.WebDriverManagerException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.BrowserType;
 
 
 /**
@@ -15,9 +14,10 @@ import org.openqa.selenium.remote.BrowserType;
 
 public class DriverFactory {
 
-    private DriverFactory() {}
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-    private static String host =  "localhost";
+    private static String host = "localhost";
+    private DriverFactory() {
+    }
 
     public static WebDriver createInstance(BrowserType browserType) {
         if (driver.get() == null) {

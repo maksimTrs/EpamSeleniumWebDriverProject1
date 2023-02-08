@@ -1,20 +1,20 @@
 **To start main tests with CHROME browser run maven command:**
 
-_`mvn  clean test -DsuiteXmlFile="src/test/resources/mail-ru-runner.xml" -DENVIRONMENT=qa`_
+_` mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-regression.xml" -DENVIRONMENT=qa`_
 
 **To start main tests with FIREFOX browser run maven command:**
 
-_`mvn clean test -DBROWSER=firefox -DsuiteXmlFile="src/test/resources/mail-ru-runner.xml" -DENVIRONMENT=qa`_
+_`mvn clean test -DBROWSER=firefox -DsuiteXmlFile="src/test/resources/mail-ru-regression.xml" -DENVIRONMENT=qa`_
 
 ============================================================
 
-**To start main tests with testNG xml:**
+**To start smoke main tests:**
 
-_`mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-runner.xml"`_
+_`mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-smoke.xml" -DENVIRONMENT=qa`_
 
 **To start tests with emails deletion logic run maven command:**
 
-_`mvn clean test -DsuiteXmlFile="src/test/resources/mail-ru-delete-test-data-runner.xml"`_
+_`mvn clean test -DBROWSER=chrome -DsuiteXmlFile="src/test/resources/mail-ru-delete-test-data-runner.xml" -DENVIRONMENT=qa`_
 
 ============================================================
 
@@ -46,11 +46,11 @@ http://localhost:4444/ui/index.html#/
 
 To run tests locally, change code part in BaseTest.java:
 
-`driver = new BrowserDriverManager().createInstance(browser, SELENIUM_GRID, host);`
+`DriverFactory.createInstance(SELENIUM_GRID);`
 
 to
 
-`driver = new BrowserDriverManager().createInstance(browser, LOCAL, host);`
+`DriverFactory.createInstance(LOCAL)`
 
 If you are using external IP address (!= localhost), add host your IP address and run it with the command:
 
