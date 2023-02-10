@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserType.LOCAL;
+import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserRunType.LOCAL;
 
 
 @Listeners({TestListener.class})  // Change the Browser type:  LOCAL <-> SELENIUM_GRID
@@ -35,7 +35,7 @@ public class BaseTest {
     @Parameters({"urlAddress"})
     public void setUp(String urlAddress) {
 
-        driver = DriverFactory.createInstance(LOCAL);
+        driver = DriverFactory.getDriver(LOCAL);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         logger.info("|||+++++||| AT Test was started for Browser: <"

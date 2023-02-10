@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static com.epam.seleniumhw.mailru.tests.BaseTest.logger;
-import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserType.LOCAL;
+import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserRunType.LOCAL;
 
 
 public class TestListener implements ITestListener {
@@ -50,13 +50,10 @@ public class TestListener implements ITestListener {
     }
 
     private void saveScreenshot() {
-        File screenCapture = ((TakesScreenshot) DriverFactory.createInstance(LOCAL))
+        File screenCapture = ((TakesScreenshot) DriverFactory.getDriver(LOCAL))
                 .getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(screenCapture, new File(
-                    "logs/debugScreenshots/"
-                            + getCurrentTimeAsString() +
-                            ".png"));
+            FileUtils.copyFile(screenCapture, new File("logs/debugScreenshots/" + getCurrentTimeAsString() + ".png"));
         } catch (IOException e) {
             logger.error("Failed to save screenshot: " + e.getLocalizedMessage());
         }
