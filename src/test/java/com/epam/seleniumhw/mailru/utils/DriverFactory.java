@@ -20,7 +20,7 @@ public class DriverFactory {
     private DriverFactory() {
     }
 
-    public static WebDriver createInstance(BrowserType browserType) {
+    public static WebDriver getDriver(BrowserRunType browserRunType) {
         if (driver.get() == null) {
             if (System.getProperty("HUB_HOST") != null && (!System.getProperty("HUB_HOST").isEmpty())) {
                 host = System.getProperty("HUB_HOST");
@@ -30,16 +30,16 @@ public class DriverFactory {
             DriverManagerType driverManagerType;
             if (System.getProperty("BROWSER") != null &&
                     System.getProperty("BROWSER").equalsIgnoreCase("FIREFOX")) {
-                driverManagerType = DriverManagerType.valueOf(BrowserFactory.FIREFOX.getBrowserType());
+                driverManagerType = DriverManagerType.valueOf(BrowserTypes.FIREFOX.getBrowserType());
             } else {
-                driverManagerType = DriverManagerType.valueOf(BrowserFactory.CHROME.getBrowserType());
+                driverManagerType = DriverManagerType.valueOf(BrowserTypes.CHROME.getBrowserType());
             }
 
-            switch (browserType) {
+            switch (browserRunType) {
                 case LOCAL -> driver.set(WebDriverManager.getInstance(driverManagerType).create());
                 case SELENIUM_GRID ->
                         driver.set(WebDriverManager.getInstance(driverManagerType).remoteAddress(path).create());
-                default -> throw new WebDriverManagerException("<Invalid browserType>");
+                default -> throw new WebDriverManagerException("<Invalid browserRunType>");
             }
             driver.get().manage().window().maximize();
         }
@@ -51,14 +51,14 @@ public class DriverFactory {
         driver.remove();
     }
 
-    public enum BrowserType {
+    public enum BrowserRunType {
         LOCAL,
         SELENIUM_GRID
     }
 
     @Getter
     @AllArgsConstructor
-    public enum BrowserFactory {
+    public enum BrowserTypes {
         CHROME("CHROME"),
         FIREFOX("FIREFOX");
 
