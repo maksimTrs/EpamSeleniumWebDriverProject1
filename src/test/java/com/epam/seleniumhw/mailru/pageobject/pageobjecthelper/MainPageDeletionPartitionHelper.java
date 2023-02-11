@@ -1,7 +1,6 @@
 package com.epam.seleniumhw.mailru.pageobject.pageobjecthelper;
 
 import com.epam.seleniumhw.mailru.utils.MailTypeEnum;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;

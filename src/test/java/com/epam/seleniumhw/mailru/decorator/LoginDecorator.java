@@ -6,6 +6,7 @@ import com.epam.seleniumhw.mailru.pageobject.LogInPage;
 public abstract class LoginDecorator implements LoginComponent {
 
     private final LoginComponent loginComponent;
+
     public LoginDecorator(LoginComponent loginComponent) {
         this.loginComponent = loginComponent;
     }

@@ -6,8 +6,7 @@ _`mvn -DsuiteXmlFile=src/test/resources/mail-ru-regression.xml clean test`_
 
 _`mvn -DBROWSER=firefox -DsuiteXmlFile=src/test/resources/mail-ru-regression.xml -DENVIRONMENT=qa clean test`_
 
-
-**To start main tests with decorator option  run maven command:**
+**To start main tests with decorator option run maven command:**
 
 _`mvn -DsuiteXmlFile=src/test/resources/mail-ru-smoke.xml -DDECORATOR=true  clean test`_
 

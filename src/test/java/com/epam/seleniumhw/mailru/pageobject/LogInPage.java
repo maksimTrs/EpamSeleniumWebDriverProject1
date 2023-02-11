@@ -6,7 +6,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.JscriptExecutorHelper.colorWebElementBorder;
+import static com.epam.seleniumhw.mailru.tests.BaseTest.logger;
 import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LogInPage extends BasePage {
 
@@ -99,6 +101,17 @@ public class LogInPage extends BasePage {
         colorWebElementBorder(jscriptExecutor, logInSubmitButton);
         logInSubmitButton.click();
         driver.switchTo().defaultContent();
+    }
+
+    public void validateLogIn() {
+        webDriverWait.until(ExpectedConditions.titleContains("Входящие"));
+
+        String redirectUrl = driver.getCurrentUrl();
+        assertThat(redirectUrl)
+                .isNotEqualTo("https://mail.ru/")
+                .contains("inbox");
+
+        logger.debug("Actual URL = <" + redirectUrl + ">");
     }
 
 

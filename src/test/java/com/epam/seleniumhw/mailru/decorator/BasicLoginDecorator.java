@@ -11,9 +11,11 @@ public class BasicLoginDecorator extends LoginDecorator {
 
     @Override
     public void login(LogInPage logInPage, String url, User user) {
-        logInPage.
-                openLogInFrame(url)
+/*        logInPage
+                .openLogInFrame(url)
                 .setUsernameDataWithClickButtonAction(user)
-                .setPasswordDataWithClickButtonAction(user);
+                .setPasswordDataWithClickButtonAction(user);*/
+        super.login(logInPage, url, user);
+        logInPage.validateLogIn();
     }
 }

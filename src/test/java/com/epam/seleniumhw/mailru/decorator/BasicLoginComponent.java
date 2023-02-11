@@ -7,8 +7,8 @@ public class BasicLoginComponent implements LoginComponent {
 
     @Override
     public void login(LogInPage logInPage, String url, User user) {
-        logInPage.
-                openLogInFrame(url)
+        logInPage
+                .openLogInFrame(url)
                 .setUsernameDataWithEnterAction(user)
                 .setPasswordDataWithEnterAction(user);
     }

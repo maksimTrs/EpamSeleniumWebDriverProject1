@@ -50,7 +50,7 @@ public class BaseTest {
         mainPage = new MainPage(driver);
         testUser = UserCreator.withCredentialsFromProperty();
 
-       // logInPage.doLogIn(urlAddress, testUser);
+        // logInPage.doLogIn(urlAddress, testUser);
         LoginComponent loginComponent = new BasicLoginComponent();
         if (Boolean.getBoolean("DECORATOR")) {
             loginComponent.login(logInPage, urlAddress, testUser);
