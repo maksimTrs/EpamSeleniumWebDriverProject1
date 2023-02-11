@@ -29,11 +29,10 @@ public class DriverFactory {
             String path = "http://" + host + ":4444/wd/hub";
 
             DriverManagerType driverManagerType;
-            if (System.getProperty("BROWSER") != null &&
-                    System.getProperty("BROWSER").equalsIgnoreCase("FIREFOX")) {
-                driverManagerType = DriverManagerType.valueOf(BrowserTypes.FIREFOX.getBrowserType());
-            } else {
-                driverManagerType = DriverManagerType.valueOf(BrowserTypes.CHROME.getBrowserType());
+            switch (System.getProperty("BROWSER").toUpperCase()) {
+                case "FIREFOX" -> driverManagerType = DriverManagerType.valueOf(BrowserTypes.FIREFOX.getBrowserType());
+                case "EDGE" -> driverManagerType = DriverManagerType.valueOf(BrowserTypes.EDGE.getBrowserType());
+                default -> driverManagerType = DriverManagerType.valueOf(BrowserTypes.CHROME.getBrowserType());
             }
 
             switch (browserRunType) {
