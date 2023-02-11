@@ -1,6 +1,7 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
 import com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.ActionHelper;
+import com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.MainPageDeletionPartitionHelper;
 import com.epam.seleniumhw.mailru.utils.MailTypeEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -293,29 +294,9 @@ public class MainPage extends BasePage {
 
         JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
         jscriptExecutor.executeScript("history.go(0)");
-        String text = null;
 
-        if (mailTypeEnum == DRAFT) {
-            webDriverWait.until(ExpectedConditions.elementToBeClickable(draftEmailPartition));
-            // text = (String) jscriptExecutor.executeScript("return arguments[0].getAttribute('data-title');", draftEmailPartition);
-            text = getSpecifiedElementAttributeText(jscriptExecutor, "title", draftEmailPartition);
-
-            assertThat(text)
-                    .as("Real value = " + text)
-                    .isEqualTo("Черновики, нет писем");
-
-            logger.debug("Result of deletion Draft Emails: " + text);
-        } else if (mailTypeEnum == SENT) {
-            webDriverWait.until(ExpectedConditions.elementToBeClickable(sentEmailPartition));
-            //text = (String) jscriptExecutor.executeScript("return arguments[0].getAttribute('data-title');", sentEmailPartition);
-            text = getSpecifiedElementAttributeText(jscriptExecutor, "title", sentEmailPartition);
-
-            assertThat(text)
-                    .as("Real value = " + text)
-                    .isEqualTo("Отправленные, нет писем");
-
-            logger.debug("Result of deletion Sent Emails: " + text);
-        }
+        MainPageDeletionPartitionHelper.validateEmailDeletedPartition(mailTypeEnum, webDriverWait,
+                jscriptExecutor, draftEmailPartition, sentEmailPartition);
     }
 
 
