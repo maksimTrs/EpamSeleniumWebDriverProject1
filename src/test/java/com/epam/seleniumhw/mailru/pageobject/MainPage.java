@@ -1,6 +1,6 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
-import com.epam.seleniumhw.mailru.utils.ActionHelper;
+import com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.ActionHelper;
 import com.epam.seleniumhw.mailru.utils.MailTypeEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.epam.seleniumhw.mailru.tests.BaseTest.logger;
-import static com.epam.seleniumhw.mailru.utils.JscriptExecutorHelper.*;
+import static com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.JscriptExecutorHelper.*;
 import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.DRAFT;
 import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.SENT;
 import static com.epam.seleniumhw.mailru.utils.TestHelper.getStringEmailListFromWebElementList;

@@ -1,4 +1,4 @@
-package com.epam.seleniumhw.mailru.utils;
+package com.epam.seleniumhw.mailru.pageobject.pageobjecthelper;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
