@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.JscriptExecutorHelper.getSpecifiedElementAttributeText;
+import static com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.JscriptExecutorHelper.getSpecifiedElementText;
 import static com.epam.seleniumhw.mailru.tests.BaseTest.logger;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,10 +16,12 @@ public class MainPageDeletionPartitionHelper {
 
     private static final String DRAFT_TEXT_RESULT = "Черновики, нет писем";
     private static final String SENT_TEXT_RESULT = "Отправленные, нет писем";
+    private static final String INBOX_TEXT_RESULT = "Писем нет";
 
     public static void validateEmailDeletedPartition(MailTypeEnum mailTypeEnum,
                                                      WebDriverWait webDriverWait, JavascriptExecutor jscriptExecutor,
-                                                     WebElement draftEmailPartition, WebElement sentEmailPartition) {
+                                                     WebElement draftEmailPartition, WebElement sentEmailPartition,
+                                                     WebElement deleteMessageText) {
 
         String text;
 
@@ -41,7 +44,15 @@ public class MainPageDeletionPartitionHelper {
 
                 logger.debug("Result of deletion Sent Emails: " + text);
             }
-           // case null -> throw new IllegalArgumentException("Wrong ENUM type was sent");
+            case INBOX -> {
+                text = getSpecifiedElementText(jscriptExecutor, deleteMessageText);
+
+                assertThat(text.trim())
+                        .as("Real value = " + text.trim())
+                        .isEqualTo(INBOX_TEXT_RESULT);
+
+                logger.debug("Result of deletion Input Emails: " + text.trim());
+            }
         }
     }
 

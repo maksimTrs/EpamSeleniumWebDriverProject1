@@ -7,8 +7,7 @@ import io.qameta.allure.Story;
 import io.qameta.allure.testng.Tag;
 import org.testng.annotations.Test;
 
-import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.DRAFT;
-import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.SENT;
+import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.*;
 
 
 /**
@@ -33,6 +32,6 @@ public class EmailDeleteTestingDataTest extends BaseTest {
         mainPage.validateEmptyEmailPartition(SENT);
 
         mainPage.deleteEmailsFromIncomingPartition();
-        mainPage.validateEmptyEmailIncomingPartition();
+        mainPage.validateEmptyEmailPartition(INBOX);
     }
 }

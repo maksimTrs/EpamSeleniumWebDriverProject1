@@ -296,7 +296,7 @@ public class MainPage extends BasePage {
         jscriptExecutor.executeScript("history.go(0)");
 
         MainPageDeletionPartitionHelper.validateEmailDeletedPartition(mailTypeEnum, webDriverWait,
-                jscriptExecutor, draftEmailPartition, sentEmailPartition);
+                jscriptExecutor, draftEmailPartition, sentEmailPartition, deleteMessageText);
     }
 
 
@@ -311,16 +311,5 @@ public class MainPage extends BasePage {
 
         new ActionHelper().moveToElementAndClickOnElementHelper(driver, selectAllEmailsButton, deleteAllEmailsButton);
         clickOnSpecifiedElement(jscriptExecutor, clearEmailsPartitionConfirmButton);
-    }
-
-    public void validateEmptyEmailIncomingPartition() {
-        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
-        String text = getSpecifiedElementText(jscriptExecutor, deleteMessageText);
-
-        assertThat(text.trim())
-                .as("Real value = " + text.trim())
-                .isEqualTo("Писем нет");
-
-        logger.debug("Result of deletion Input Emails: " + text.trim());
     }
 }
