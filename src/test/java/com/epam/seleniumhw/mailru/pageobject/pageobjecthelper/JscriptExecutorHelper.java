@@ -27,4 +27,8 @@ public class JscriptExecutorHelper {
         jscriptExecutor.
                 executeScript(String.format("document.querySelector(\"div[role='textbox'] > div:first-of-type\").innerHTML='%s'", text));
     }
+
+    public static void colorWebElementBorder(JavascriptExecutor jscriptExecutor, WebElement webElement) {
+        jscriptExecutor.executeScript("arguments[0].style.border='3px solid red'", webElement);
+    }
 }

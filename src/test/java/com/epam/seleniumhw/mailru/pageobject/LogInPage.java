@@ -1,13 +1,11 @@
 package com.epam.seleniumhw.mailru.pageobject;
 
 import com.epam.seleniumhw.mailru.model.User;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import static com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.JscriptExecutorHelper.colorWebElementBorder;
 import static com.epam.seleniumhw.mailru.utils.SecretPasswordHandler.handlingPassword;
 
 public class LogInPage extends BasePage {
@@ -67,14 +65,19 @@ public class LogInPage extends BasePage {
     public LogInPage setUsernameDataWithEnterAction(User user) {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userNameLogInField));
         userNameLogInField.sendKeys(user.getUsername(), Keys.ENTER);
+
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
+        colorWebElementBorder(jscriptExecutor, userPasswordLogInButton);
         return this;
     }
 
     public LogInPage setUsernameDataWithClickButtonAction(User user) {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userNameLogInField));
         userNameLogInField.sendKeys(user.getUsername());
-
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userPasswordLogInButton));
+
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
+        colorWebElementBorder(jscriptExecutor, userPasswordLogInButton);
         userPasswordLogInButton.click();
         return this;
     }
@@ -83,14 +86,18 @@ public class LogInPage extends BasePage {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userPasswordLogInField));
         userPasswordLogInField.sendKeys(handlingPassword(user.getPassword()), Keys.ENTER);
 
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
+        colorWebElementBorder(jscriptExecutor, logInSubmitButton);
         driver.switchTo().defaultContent();
     }
 
     public void setPasswordDataWithClickButtonAction(User user) {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userPasswordLogInField));
         userPasswordLogInField.sendKeys(handlingPassword(user.getPassword()));
-        logInSubmitButton.click();
 
+        JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
+        colorWebElementBorder(jscriptExecutor, logInSubmitButton);
+        logInSubmitButton.click();
         driver.switchTo().defaultContent();
     }
 
