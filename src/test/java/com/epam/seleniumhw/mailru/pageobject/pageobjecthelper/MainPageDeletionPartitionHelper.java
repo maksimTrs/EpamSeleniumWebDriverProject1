@@ -19,14 +19,13 @@ public class MainPageDeletionPartitionHelper {
 
     public static void validateEmailDeletedPartition(MailTypeEnum mailTypeEnum,
                                                      WebDriverWait webDriverWait, JavascriptExecutor jscriptExecutor,
-                                                     WebElement draftEmailPartition, WebElement sentEmailPartition,
-                                                     WebElement deleteMessageText) {
+                                                     WebElement...webElements) {
 
         String text;
 
         switch (mailTypeEnum) {
             case DRAFT -> {
-                text = getEmailPartitionData(webDriverWait, jscriptExecutor, draftEmailPartition);
+                text = getEmailPartitionData(webDriverWait, jscriptExecutor, webElements[0]);
 
                 assertThat(text)
                         .as("Real value = " + text)
@@ -35,7 +34,7 @@ public class MainPageDeletionPartitionHelper {
                 logger.debug("Result of deletion Draft Emails: " + text);
             }
             case SENT -> {
-                text = getEmailPartitionData(webDriverWait, jscriptExecutor, sentEmailPartition);
+                text = getEmailPartitionData(webDriverWait, jscriptExecutor, webElements[1]);
 
                 assertThat(text)
                         .as("Real value = " + text)
@@ -44,7 +43,7 @@ public class MainPageDeletionPartitionHelper {
                 logger.debug("Result of deletion Sent Emails: " + text);
             }
             case INBOX -> {
-                text = getSpecifiedElementText(jscriptExecutor, deleteMessageText);
+                text = getSpecifiedElementText(jscriptExecutor, webElements[2]);
 
                 assertThat(text.trim())
                         .as("Real value = " + text.trim())

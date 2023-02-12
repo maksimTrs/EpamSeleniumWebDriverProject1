@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.JscriptExecutorHelper.addTextToEmailMessageField;
@@ -296,8 +297,10 @@ public class MainPage extends BasePage {
         JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
         jscriptExecutor.executeScript("history.go(0)");
 
+        WebElement[] listOfTestedMailPartitions = {draftEmailPartition, sentEmailPartition, deleteMessageText};
+
         MainPageDeletionPartitionHelper.validateEmailDeletedPartition(mailTypeEnum, webDriverWait,
-                jscriptExecutor, draftEmailPartition, sentEmailPartition, deleteMessageText);
+                jscriptExecutor, listOfTestedMailPartitions);
     }
 
 
