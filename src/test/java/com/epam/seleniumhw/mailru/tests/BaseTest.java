@@ -26,7 +26,7 @@ import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserRunType.LOCA
 
 
 @Listeners({TestListener.class})  // Change the Browser type:  LOCAL <-> SELENIUM_GRID
-public class BaseTest {
+public abstract class BaseTest {
 
     public static Logger logger = Logger.getLogger(BaseTest.class);
     public User testUser;
