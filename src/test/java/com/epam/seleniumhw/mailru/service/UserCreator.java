@@ -9,8 +9,12 @@ public class UserCreator {
     public static final String TESTDATA_USER_PASSWORD = "testdata.user.password";
 
     public static User withCredentialsFromProperty() {
-        return new User(TestDataReader.getTestData(TESTDATA_USER_NAME),
-                TestDataReader.getTestData(TESTDATA_USER_PASSWORD));
+/*        return new User(TestDataReader.getTestData(TESTDATA_USER_NAME),
+                TestDataReader.getTestData(TESTDATA_USER_PASSWORD));*/
+        return User.builder()
+                .username(TestDataReader.getTestData(TESTDATA_USER_NAME))
+                .password(TestDataReader.getTestData(TESTDATA_USER_PASSWORD))
+                .build();
     }
 
     public static User withEmptyPassword() {
