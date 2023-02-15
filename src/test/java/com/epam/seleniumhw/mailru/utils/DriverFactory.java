@@ -9,7 +9,8 @@ import org.openqa.selenium.WebDriver;
 
 
 /**
- * @see <a href="https://testomat.io/blog/singleton-design-pattern-how-to-use-it-in-test-automation/">Singleton pattern</a>
+ * @see <a href="https://testomat.io/blog/singleton-design-pattern-how-to-use-it-in-test-automation">Singleton pattern</a>
+ * @see <a href="https://medium.com/javarevisited/factory-pattern-for-test-automation-828b09499dab">Factory Pattern For Test Automation</a>
  */
 
 public class DriverFactory {
@@ -60,7 +61,8 @@ public class DriverFactory {
     @AllArgsConstructor
     public enum BrowserTypes {
         CHROME("CHROME"),
-        FIREFOX("FIREFOX");
+        FIREFOX("FIREFOX"),
+        EDGE("EDGE");
 
         private final String browserType;
     }

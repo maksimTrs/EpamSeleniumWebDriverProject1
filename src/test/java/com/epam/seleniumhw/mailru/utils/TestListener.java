@@ -30,7 +30,7 @@ public class TestListener implements ITestListener {
 
     public void onTestFailure(ITestResult iTestResult) {
         saveScreenshot();
-        logger.error("<<<Test failed. Screenshot with issue was saved>>>");
+        logger.error("<<< Test failed. Screenshot with issue was saved >>>");
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
@@ -53,7 +53,9 @@ public class TestListener implements ITestListener {
         File screenCapture = ((TakesScreenshot) DriverFactory.getDriver(LOCAL))
                 .getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(screenCapture, new File("logs/debugScreenshots/" + getCurrentTimeAsString() + ".png"));
+            File copyFile = new File("logs/debugScreenshots/" + getCurrentTimeAsString() + ".png");
+            FileUtils.copyFile(screenCapture, copyFile);
+            logger.error("Screenshot with issue was created: <<<" + copyFile.getName() + ">>>");
         } catch (IOException e) {
             logger.error("Failed to save screenshot: " + e.getLocalizedMessage());
         }

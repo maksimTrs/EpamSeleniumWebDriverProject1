@@ -1,6 +1,9 @@
 package com.epam.seleniumhw.mailru.tests;
 
 
+import com.epam.seleniumhw.mailru.decorator.BasicLoginComponent;
+import com.epam.seleniumhw.mailru.decorator.BasicLoginDecorator;
+import com.epam.seleniumhw.mailru.decorator.LoginComponent;
 import com.epam.seleniumhw.mailru.model.User;
 import com.epam.seleniumhw.mailru.pageobject.LogInPage;
 import com.epam.seleniumhw.mailru.pageobject.MainPage;
@@ -23,7 +26,7 @@ import static com.epam.seleniumhw.mailru.utils.DriverFactory.BrowserRunType.LOCA
 
 
 @Listeners({TestListener.class})  // Change the Browser type:  LOCAL <-> SELENIUM_GRID
-public class BaseTest {
+public abstract class BaseTest {
 
     public static Logger logger = Logger.getLogger(BaseTest.class);
     public User testUser;
@@ -46,7 +49,15 @@ public class BaseTest {
         logInPage = new LogInPage(driver);
         mainPage = new MainPage(driver);
         testUser = UserCreator.withCredentialsFromProperty();
-        logInPage.doLogIn(urlAddress, testUser);
+
+        // logInPage.doLogIn(urlAddress, testUser);
+        LoginComponent loginComponent = new BasicLoginComponent();
+        if (Boolean.getBoolean("DECORATOR")) {
+            loginComponent.login(logInPage, urlAddress, testUser);
+        } else {
+            loginComponent = new BasicLoginDecorator(loginComponent);
+            loginComponent.login(logInPage, urlAddress, testUser);
+        }
     }
 
     @AfterClass(alwaysRun = true)

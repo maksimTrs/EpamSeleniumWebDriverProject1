@@ -1,4 +1,4 @@
-package com.epam.seleniumhw.mailru.utils;
+package com.epam.seleniumhw.mailru.pageobject.pageobjecthelper;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -26,5 +26,9 @@ public class JscriptExecutorHelper {
     public static void addTextToEmailMessageField(JavascriptExecutor jscriptExecutor, String text) {
         jscriptExecutor.
                 executeScript(String.format("document.querySelector(\"div[role='textbox'] > div:first-of-type\").innerHTML='%s'", text));
+    }
+
+    public static void colorWebElementBorder(JavascriptExecutor jscriptExecutor, WebElement webElement) {
+        jscriptExecutor.executeScript("arguments[0].style.border='3px solid red'", webElement);
     }
 }
