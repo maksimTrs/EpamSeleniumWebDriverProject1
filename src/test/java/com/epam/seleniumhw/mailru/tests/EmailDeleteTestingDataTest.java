@@ -31,7 +31,7 @@ public class EmailDeleteTestingDataTest extends BaseTest {
         mainPage.deleteEmails(SENT);
         mainPage.validateEmptyEmailPartition(SENT);
 
-        mainPage.deleteEmailsFromIncomingPartition();
+        mainPage.deleteEmails(INBOX);
         mainPage.validateEmptyEmailPartition(INBOX);
     }
 }

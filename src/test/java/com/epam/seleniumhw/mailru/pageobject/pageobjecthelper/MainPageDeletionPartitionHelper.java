@@ -15,7 +15,7 @@ public class MainPageDeletionPartitionHelper {
 
     private static final String DRAFT_TEXT_RESULT = "Черновики, нет писем";
     private static final String SENT_TEXT_RESULT = "Отправленные, нет писем";
-    private static final String INBOX_TEXT_RESULT = "Писем нет";
+    private static final String INBOX_TEXT_RESULT = "Входящие, нет писем";
 
     public static void validateEmailDeletedPartition(MailTypeEnum mailTypeEnum,
                                                      WebDriverWait webDriverWait, JavascriptExecutor jscriptExecutor,
@@ -43,7 +43,7 @@ public class MainPageDeletionPartitionHelper {
                 logger.debug("Result of deletion Sent Emails: " + text);
             }
             case INBOX -> {
-                text = getSpecifiedElementText(jscriptExecutor, webElements[2]);
+                text = getEmailPartitionData(webDriverWait, jscriptExecutor, webElements[2]);
 
                 assertThat(text.trim())
                         .as("Real value = " + text.trim())

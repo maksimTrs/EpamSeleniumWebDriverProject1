@@ -17,8 +17,7 @@ import java.util.List;
 import static com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.JscriptExecutorHelper.addTextToEmailMessageField;
 import static com.epam.seleniumhw.mailru.pageobject.pageobjecthelper.JscriptExecutorHelper.clickOnSpecifiedElement;
 import static com.epam.seleniumhw.mailru.tests.BaseTest.logger;
-import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.DRAFT;
-import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.SENT;
+import static com.epam.seleniumhw.mailru.utils.MailTypeEnum.*;
 import static com.epam.seleniumhw.mailru.utils.TestHelper.getStringEmailListFromWebElementList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -75,6 +74,9 @@ public class MainPage extends BasePage {
 
     @FindBy(xpath = "//a[contains(@href, 'sent')]//following::div[@data-qa-id='clear']//span[text()='Очистить содержимое']")
     private WebElement clearSentEmailsButton;
+
+    @FindBy(xpath = "//a[contains(@href, 'inbox')]//following::div[@data-qa-id='clear']//span[text()='Очистить содержимое']")
+    private WebElement clearInboxEmailsButton;
 
     @FindBy(xpath = "//tbody//span[@data-title-shortcut='Ctrl+A'][@title='Выделить все']")
     private WebElement selectAllEmailsButton;
@@ -289,6 +291,12 @@ public class MainPage extends BasePage {
 
             clickOnSpecifiedElement(jscriptExecutor, clearSentEmailsButton);
             clickOnSpecifiedElement(jscriptExecutor, clearEmailsPartitionConfirmButton);
+        } else if (mailTypeEnum == INBOX) {
+            webDriverWait.until(ExpectedConditions.elementToBeClickable(incomingEmailsPartition));
+            new ActionHelper().moveToElementAndRightClick(driver, incomingEmailsPartition);
+
+            clickOnSpecifiedElement(jscriptExecutor, clearInboxEmailsButton);
+            clickOnSpecifiedElement(jscriptExecutor, clearEmailsPartitionConfirmButton);
         }
     }
 
@@ -297,7 +305,7 @@ public class MainPage extends BasePage {
         JavascriptExecutor jscriptExecutor = (JavascriptExecutor) driver;
         jscriptExecutor.executeScript("history.go(0)");
 
-        WebElement[] listOfTestedMailPartitions = {draftEmailPartition, sentEmailPartition, deleteMessageText};
+        WebElement[] listOfTestedMailPartitions = {draftEmailPartition, sentEmailPartition, incomingEmailsPartition};
 
         MainPageDeletionPartitionHelper.validateEmailDeletedPartition(mailTypeEnum, webDriverWait,
                 jscriptExecutor, listOfTestedMailPartitions);
