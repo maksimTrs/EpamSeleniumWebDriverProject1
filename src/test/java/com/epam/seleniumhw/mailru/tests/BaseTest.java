@@ -16,6 +16,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import java.io.IOException;
@@ -94,9 +95,12 @@ public abstract class BaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void logTestStop(Method method) {
-        saveScreenshotPNG();
+    public void logTestStop(Method method, ITestResult testResult) {
 
+        if (ITestResult.FAILURE == testResult.getStatus()) {
+            saveScreenshotPNG();
+        }
+       // saveScreenshotPNG();
         logger.info("********************************************************************************");
         logger.info("<<< Test method: " + method.getName() + " was finished >>>");
         logger.info("********************************************************************************");
@@ -109,6 +113,4 @@ public abstract class BaseTest {
         logger.info("Attaching screenshot to Allure report");
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
-
-
 }
