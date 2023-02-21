@@ -18,7 +18,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.*;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -33,6 +35,22 @@ public abstract class BaseTest {
     protected LogInPage logInPage;
     protected MainPage mainPage;
     protected WebDriver driver;
+
+
+    @BeforeSuite
+    private static void executePreConditions() {
+
+        Path path = FileSystems.getDefault().getPath("//target/allure-results");
+        try {
+            Files.deleteIfExists(path);
+        } catch (NoSuchFileException x) {
+            System.err.format("%s: no such" + " file or directory%n", path);
+        } catch (DirectoryNotEmptyException x) {
+            System.err.format("%s not empty%n", path);
+        } catch (IOException ix) {
+            ix.printStackTrace();
+        }
+    }
 
     @BeforeClass
     @Parameters({"urlAddress"})
