@@ -30,7 +30,7 @@ public class MainPage extends BasePage {
     private WebElement userMailAccountSection;
     @FindBy(xpath = "//div[@data-testid='whiteline-account-exit']//div[text()='Выйти']")
     private WebElement mailExitButton;
-    @FindBy(xpath = "//div[@data-testid='whiteline-account']/span[2]")
+    @FindBy(xpath = "//div[@data-testid='whiteline-account']//img")
     private WebElement userMailAccountName;
     @FindBy(xpath = "//a[@href='/compose/']")
     private WebElement createEmailButton;
@@ -103,7 +103,7 @@ public class MainPage extends BasePage {
 
     public String getUserLogInName() {
         webDriverWait.until(ExpectedConditions.elementToBeClickable(userMailAccountSection));
-        return userMailAccountName.getText();
+        return userMailAccountName.getAttribute("alt");
     }
 
     public void createNewDraftEmail(String toWhomAddressEmail, String subjectEmail, String messageEmail) {
