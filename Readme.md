@@ -41,8 +41,8 @@ _`docker compose up`_
 
 ##### **NOTE:** Before Start docker compose, need to replace path to the video files in these sections:
 
-- ~~E:\MAX\IT\Logging\java_for_testers\chrome~~:/videos
-- ~~E:\MAX\IT\Logging\java_for_testers\firefox~~:/videos
+- \chrome~~:/videos
+- \firefox~~:/videos
 
 Open in Browser URL ->
 
